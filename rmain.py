@@ -7,7 +7,7 @@ from kivy.uix.screenmanager import ScreenManager, FadeTransition
 
 from screens import *
 
-# Make sure you set DEBUG=1 in your PyCharm run configuration environment variables.
+# Make sure you set DEBUG=1 in your PyCharm run configuration environment variables. Maybe.
 
 
 class AcaReady(MDApp):
