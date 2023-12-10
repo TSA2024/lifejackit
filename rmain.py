@@ -23,7 +23,7 @@ class LifeJackIt(MDApp):
     sm = None
 
     def build_app(self, first=False):  # Previously build.
-        Window.size = (600, 850)
+        Window.size = (400, 600)
         if self.sm is None:
             self.sm = ScreenManager(transition=FadeTransition(duration=.5))
             self.sm.add_widget(MainScreen(name='main'))
