@@ -10,7 +10,7 @@ from screens import *
 # Make sure you set DEBUG=1 in your PyCharm run configuration environment variables. Maybe.
 
 
-class AcaReady(MDApp):
+class LifeJackIt(MDApp):
     KV_FILES = [
         path.join(getcwd(), "lifejackit.kv"),
     ]
@@ -31,4 +31,4 @@ class AcaReady(MDApp):
 
 
 if __name__ == '__main__':
-    AcaReady().run()
+    LifeJackIt().run()
