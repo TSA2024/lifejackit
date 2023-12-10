@@ -5,7 +5,7 @@ from kivy.uix.screenmanager import ScreenManager, FadeTransition
 from screens import *
 
 
-class AcaReady(MDApp):
+class LifeJackIt(MDApp):
     sm = None
 
     def build(self):
@@ -16,4 +16,4 @@ class AcaReady(MDApp):
 
 
 if __name__ == '__main__':
-    AcaReady().run()
+    LifeJackIt().run()

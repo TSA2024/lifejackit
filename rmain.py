@@ -12,7 +12,7 @@ from screens import *
 
 class AcaReady(MDApp):
     KV_FILES = [
-        path.join(getcwd(), "acaready.kv"),
+        path.join(getcwd(), "lifejackit.kv"),
     ]
     CLASSES = {
         "MainScreen": "screens",
