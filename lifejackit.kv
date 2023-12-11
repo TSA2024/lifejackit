@@ -3,7 +3,6 @@
 <MainScreen>
     BoxLayout:
         orientation: 'vertical'
-
         MDBottomNavigation:
             id: tabs
             panel_color: 190/255, 210/255, 247/255, 1
@@ -14,10 +13,16 @@
                 name: 'hi'
                 text: "Blog"
                 icon: 'book-open'
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 50
+                    MDLabel:
+                        text: 'Self-Improvement'
+                        halign: 'center'
 
-                MDLabel:
-                    text: 'Self-Improvement'
-                    halign: 'center'
+                    MDRaisedButton:
+                        text: "kljdsjklfd"
+                        pos_hint: {"center_x": .5, "center_y": .5}
 
             MDBottomNavigationItem:
                 name: 'hello'
