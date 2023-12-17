@@ -1,5 +1,18 @@
 # Icons: https://materialdesignicons.com/
-
+<StartingScreen>
+    canvas:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "lifejackit (1).png"
+            pos: self.pos
+            size: self.size
+    MDRaisedButton:
+        text: "Create an account."
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+    MDRaisedButton:
+        text: "Log in."
+        pos_hint: {"center_x": 0.5, "center_y": 0.2}
 <MainScreen>
     BoxLayout:
         orientation: 'vertical'
