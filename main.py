@@ -14,6 +14,7 @@ class LifeJackIt(MDApp):
         self.sm = ScreenManager(transition=FadeTransition(duration=.5))
         self.sm.add_widget(StartingScreen(name='starting'))
         self.sm.add_widget(MainScreen(name='main'))
+        self.sm.add_widget(CreateAccountScreen(name='account'))
         return self.sm
 
 
