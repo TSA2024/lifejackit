@@ -3,6 +3,7 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import FadeTransition
 
 from screens import *
+from database import create_tables
 
 
 class LifeJackIt(MDApp):
@@ -17,4 +18,5 @@ class LifeJackIt(MDApp):
 
 
 if __name__ == '__main__':
+    create_tables()
     LifeJackIt().run()

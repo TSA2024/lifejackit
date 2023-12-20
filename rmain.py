@@ -6,6 +6,7 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, FadeTransition
 
 from screens import *
+from database import create_tables
 
 # Make sure you set DEBUG=1 in your PyCharm run configuration environment variables. Maybe.
 
@@ -33,4 +34,5 @@ class LifeJackIt(MDApp):
 
 
 if __name__ == '__main__':
+    create_tables()
     LifeJackIt().run()
