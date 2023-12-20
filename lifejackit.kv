@@ -16,6 +16,7 @@
         text: "Log in."
         pos_hint: {"center_x": 0.5, "center_y": 0.2}
 
+
 <CreateAccountScreen>
     canvas:
         Color:
@@ -32,9 +33,7 @@
         pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
 
-
         MDRelativeLayout:
-
             MDLabel:
                 id: label
                 text: "Create an Account"
@@ -76,12 +75,6 @@
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled else "account"
-
-
-
-
-
-
 
 
 <MainScreen>

@@ -17,3 +17,4 @@ class CreateAccountScreen(Screen):
         password = self.ids.password.text
         if 0 < len(username) <= 20 and 0 < len(password) <= 50:
             self.box_is_filled = True
+            # TODO: Figure out how to get screen manager elsewhere and change here maybe.
