@@ -16,6 +16,7 @@ class LifeJackIt(MDApp):
     ]
     CLASSES = {
         "MainScreen": "screens",
+        "StartingScreen": "screens",
     }
     AUTORELOADER_PATHS = [
         (".", {"recursive": True}),
