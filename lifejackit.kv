@@ -15,6 +15,8 @@
     MDRaisedButton:
         text: "Log in."
         pos_hint: {"center_x": 0.5, "center_y": 0.2}
+        on_release:
+            app.root.current = "login"
 
 
 <CreateAccountScreen>
@@ -75,6 +77,66 @@
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled else "account"
+
+
+<LogInScreen>
+    canvas:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "lifejackit background.png"
+            pos: self.pos
+            size: self.size
+    MDCard:
+        opacity: 0.77
+        padding: 4
+        size_hint: None, None
+        size: "240dp", "280dp"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+        MDRelativeLayout:
+            MDLabel:
+                id: label
+                text: "Log In"
+                adaptive_size: True
+                color: "black"
+                pos_hint: {"center_x": 0.5, "center_y": 0.88}
+                font_size: '18sp'
+                bold: True
+            MDTextField:
+                id: username_login
+                hint_text: "Username"
+                hint_text_size: "5sp"
+                mode: "rectangle"
+                width: 200
+                height: 10
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                line_color_normal: 0/255, 0/255, 0/255, 1
+                multiline: False
+                font_size:"15dp"
+                max_text_length: 20
+                #hint_text_color_normal: "black"
+            MDTextField:
+                id: password_login
+                hint_text: "Password"
+                hint_text_size: "5sp"
+                mode: "rectangle"
+                width: 200
+                height: 10
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                line_color_normal: 0/255, 0/255, 0/255, 1
+                multiline: False
+                font_size:"15dp"
+                max_text_length: 50
+            MDRaisedButton:
+                text: "Continue"
+                pos_hint: {"center_x": 0.5, "center_y": 0.15}
+                on_release:
+                    self.parent.parent.parent.take_username()
+                    app.root.current = "main" if self.parent.parent.parent.box_is_filled_login else "login"
 
 
 <MainScreen>
