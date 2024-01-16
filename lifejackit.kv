@@ -77,6 +77,13 @@
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled else "account"
+            MDRaisedButton:
+                size_hint: None, None
+                size: 0.5, 0.5
+                text: "Return"
+                font_size: "10sp"
+                on_release:
+                    app.root.current = "starting"
 
 
 <LogInScreen>
@@ -137,7 +144,13 @@
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled_login else "login"
-
+            MDRaisedButton:
+                size_hint: None, None
+                size: 0.5, 0.5
+                text: "Return"
+                font_size: "10sp"
+                on_release:
+                    app.root.current = "starting"
 
 <MainScreen>
     BoxLayout:
@@ -149,7 +162,7 @@
             font_style: ""  # Add font maybe.
 
             MDBottomNavigationItem:
-                name: 'hi'
+                name: 'blog'
                 text: "Blog"
                 icon: 'book-open'
                 BoxLayout:
@@ -164,7 +177,7 @@
                         pos_hint: {"center_x": .5, "center_y": .5}
 
             MDBottomNavigationItem:
-                name: 'hello'
+                name: 'education'
                 text: "Education"
                 icon: 'school'
 
@@ -173,10 +186,21 @@
                     halign: 'center'
 
             MDBottomNavigationItem:
-                name: 'hellohi'
+                name: 'help'
                 text: "Help"
                 icon: 'chat-question'
 
                 MDLabel:
                     text: 'HI ERIC HI KISHEN HI ELI :D'
                     halign: 'center'
+
+            MDBottomNavigationItem:
+                name: 'settings'
+                text: "Settings"
+                icon: 'cog'
+
+                MDRaisedButton:
+                    text: "Return to Starting Screen"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+                    on_release:
+                        app.root.current = "starting"
