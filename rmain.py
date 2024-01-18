@@ -21,6 +21,7 @@ class LifeJackIt(MDApp):
         "MainScreen": "screens",
         "StartingScreen": "screens",
         "CreateAccountScreen": "screens",
+        "LogInScreen": "screens",
     }
     AUTORELOADER_PATHS = [
         (".", {"recursive": True}),
@@ -35,8 +36,9 @@ class LifeJackIt(MDApp):
             self.sm.add_widget(StartingScreen(name='starting'))
             self.sm.add_widget(MainScreen(name='main'))
             self.sm.add_widget(CreateAccountScreen(name='account'))
+            self.sm.add_widget(LogInScreen(name='login'))
             sm = self.sm
-        return Factory.CreateAccountScreen()
+        return Factory.MainScreen()
 
 
 if __name__ == '__main__':
