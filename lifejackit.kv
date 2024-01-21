@@ -57,9 +57,14 @@
                 multiline: False
                 font_size:"15dp"
                 max_text_length: 20
+                helper_text_mode: "on_error"
+                on_text_validate: self.parent.parent.parent.check_username_length(self)
+                on_focus:
+                    self.helper_text = ""
+                    self.parent.parent.parent.check_username_length(self)
                 #hint_text_color_normal: "black"
             MDTextField:
-                id:password
+                id: password
                 hint_text: "Password"
                 hint_text_size: "5sp"
                 mode: "rectangle"
@@ -70,7 +75,10 @@
                 line_color_normal: 0/255, 0/255, 0/255, 1
                 multiline: False
                 font_size:"15dp"
+                helper_text_mode: "on_error"
                 max_text_length: 50
+                on_text_validate: self.parent.parent.parent.check_password_length(self)
+                on_focus: self.parent.parent.parent.check_password_length(self)
             MDRaisedButton:
                 text: "Continue"
                 pos_hint: {"center_x": 0.5, "center_y": 0.15}
@@ -124,6 +132,10 @@
                 multiline: False
                 font_size:"15dp"
                 max_text_length: 20
+                on_text_validate: self.parent.parent.parent.check_username_length(self)
+                on_focus:
+                    self.helper_text = ""
+                    self.parent.parent.parent.check_username_length(self)
                 #hint_text_color_normal: "black"
             MDTextField:
                 id: password_login
@@ -138,6 +150,10 @@
                 multiline: False
                 font_size:"15dp"
                 max_text_length: 50
+                on_text_validate: self.parent.parent.parent.check_password_length(self)
+                on_focus:
+                    self.helper_text = ""
+                    self.parent.parent.parent.check_password_length(self)
             MDRaisedButton:
                 text: "Continue"
                 pos_hint: {"center_x": 0.5, "center_y": 0.15}
