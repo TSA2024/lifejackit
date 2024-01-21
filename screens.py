@@ -7,6 +7,12 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.snackbar import Snackbar
 
 from database import query, update
+from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.tab import MDTabsBase
+
+
+class Tab(MDFloatLayout, MDTabsBase):
+    pass
 
 
 class StartingScreen(Screen):

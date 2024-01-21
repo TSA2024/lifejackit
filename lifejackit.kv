@@ -185,6 +185,42 @@
                 BoxLayout:
                     orientation: "vertical"
                     padding: 0
+                    
+                    MDTabs:
+                        id: tabs
+                        tab_hint_x: True
+                        Tab:
+                            icon: "school"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Education."
+                                    halign: "center"
+                        Tab:
+                            icon: "head-heart"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Mental health."
+                                    halign: "center"
+                        Tab:
+                            icon: "dumbbell"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Sleep, nutrition, exercise."
+                                    halign: "center"
+                        Tab:
+                            icon: "star-shooting"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Aspirations."
+                                    halign: "center"
 
                     MDTopAppBar:
                         title: "Welcome to the Blog"
