@@ -1,5 +1,158 @@
 #:import Window kivy.core.window.Window
 
+<StartingScreen>
+    canvas:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "lifejackit (1).png"
+            pos: self.pos
+            size: self.size
+    MDRaisedButton:
+        text: "Create an account."
+        pos_hint: {"center_x": 0.5, "center_y": 0.3}
+        on_release:
+            app.root.current = "account"
+    MDRaisedButton:
+        text: "Log in."
+        pos_hint: {"center_x": 0.5, "center_y": 0.2}
+        on_release:
+            app.root.current = "login"
+
+
+<CreateAccountScreen>
+    canvas:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "lifejackit background.png"
+            pos: self.pos
+            size: self.size
+    MDCard:
+        opacity: 0.77
+        padding: 4
+        size_hint: None, None
+        size: "240dp", "280dp"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+        MDRelativeLayout:
+            MDLabel:
+                id: label
+                text: "Create an Account"
+                adaptive_size: True
+                color: "black"
+                pos_hint: {"center_x": 0.5, "center_y": 0.88}
+                font_size: '18sp'
+                bold: True
+            MDTextField:
+                id: username
+                hint_text: "Username"
+                hint_text_size: "5sp"
+                mode: "rectangle"
+                width: 200
+                height: 10
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                line_color_normal: 0/255, 0/255, 0/255, 1
+                multiline: False
+                font_size:"15dp"
+                max_text_length: 20
+                #hint_text_color_normal: "black"
+            MDTextField:
+                id:password
+                hint_text: "Password"
+                hint_text_size: "5sp"
+                mode: "rectangle"
+                width: 200
+                height: 10
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                line_color_normal: 0/255, 0/255, 0/255, 1
+                multiline: False
+                font_size:"15dp"
+                max_text_length: 50
+            MDRaisedButton:
+                text: "Continue"
+                pos_hint: {"center_x": 0.5, "center_y": 0.15}
+                on_release:
+                    self.parent.parent.parent.take_username()
+                    app.root.current = "main" if self.parent.parent.parent.box_is_filled else "account"
+            MDRaisedButton:
+                size_hint: None, None
+                size: 0.5, 0.5
+                text: "Return"
+                font_size: "10sp"
+                on_release:
+                    app.root.current = "starting"
+
+
+<LogInScreen>
+    canvas:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle:
+            source: "lifejackit background.png"
+            pos: self.pos
+            size: self.size
+    MDCard:
+        opacity: 0.77
+        padding: 4
+        size_hint: None, None
+        size: "240dp", "280dp"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+        MDRelativeLayout:
+            MDLabel:
+                id: label
+                text: "Log In"
+                adaptive_size: True
+                color: "black"
+                pos_hint: {"center_x": 0.5, "center_y": 0.88}
+                font_size: '18sp'
+                bold: True
+            MDTextField:
+                id: username_login
+                hint_text: "Username"
+                hint_text_size: "5sp"
+                mode: "rectangle"
+                width: 200
+                height: 10
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5, "center_y": 0.7}
+                line_color_normal: 0/255, 0/255, 0/255, 1
+                multiline: False
+                font_size:"15dp"
+                max_text_length: 20
+                #hint_text_color_normal: "black"
+            MDTextField:
+                id: password_login
+                hint_text: "Password"
+                hint_text_size: "5sp"
+                mode: "rectangle"
+                width: 200
+                height: 10
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5, "center_y": 0.4}
+                line_color_normal: 0/255, 0/255, 0/255, 1
+                multiline: False
+                font_size:"15dp"
+                max_text_length: 50
+            MDRaisedButton:
+                text: "Continue"
+                pos_hint: {"center_x": 0.5, "center_y": 0.15}
+                on_release:
+                    self.parent.parent.parent.take_username()
+                    app.root.current = "main" if self.parent.parent.parent.box_is_filled_login else "login"
+            MDRaisedButton:
+                size_hint: None, None
+                size: 0.5, 0.5
+                text: "Return"
+                font_size: "10sp"
+                on_release:
+                    app.root.current = "starting"
+
 <MainScreen>
     MDBoxLayout:
         orientation: "vertical"
@@ -10,7 +163,7 @@
             font_style: ""  # Add font maybe.
 
             MDBottomNavigationItem:
-                name: 'hi'
+                name: 'blog'
                 text: "Blog"
                 icon: 'book-open'
                 MDBoxLayout:
@@ -101,7 +254,7 @@
                                 pos: self.pos
 
             MDBottomNavigationItem:
-                name: 'hello'
+                name: 'education'
                 text: "Education"
                 icon: 'school'
 
@@ -110,16 +263,23 @@
                     halign: 'center'
 
             MDBottomNavigationItem:
-                name: 'hellohi'
+                name: "help"
                 text: "Help"
                 icon: 'chat-question'
 
                 MDDropDownItem:
-                    id: drop_item
+                    id: help_button
                     pos_hint: {'center_x': .5, 'center_y': .5}
                     text: 'Frequently Asked Questions'
-                    on_release: app.dropdown.open(self)
+                    on_release: root.help_menu.open()
 
+            MDBottomNavigationItem:
+                name: 'settings'
+                text: "Settings"
+                icon: 'cog'
 
-
-
+                MDRaisedButton:
+                    text: "Return to Starting Screen"
+                    pos_hint: {"center_x": .25, "center_y": 0.05}
+                    on_release:
+                        app.root.current = "starting"
