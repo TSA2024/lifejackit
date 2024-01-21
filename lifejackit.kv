@@ -1,4 +1,5 @@
 # Icons: https://materialdesignicons.com/
+
 <StartingScreen>
     canvas:
         Color:
@@ -183,7 +184,11 @@
                 icon: 'book-open'
                 BoxLayout:
                     orientation: "vertical"
-                    padding: 50
+                    padding: 0
+
+                    MDTopAppBar:
+                        title: "Welcome to the Blog"
+                        left_action_items: [["menu", lambda x: root.callback(x)]]
                     MDLabel:
                         text: 'Self-Improvement'
                         halign: 'center'
@@ -191,6 +196,7 @@
                     MDRaisedButton:
                         text: "kljdsjklfd"
                         pos_hint: {"center_x": .5, "center_y": .5}
+
 
             MDBottomNavigationItem:
                 name: 'education'
