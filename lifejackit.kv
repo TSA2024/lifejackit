@@ -183,14 +183,42 @@
                 icon: 'book-open'
                 BoxLayout:
                     orientation: "vertical"
-                    padding: 50
-                    MDLabel:
-                        text: 'Self-Improvement'
-                        halign: 'center'
-
-                    MDRaisedButton:
-                        text: "kljdsjklfd"
-                        pos_hint: {"center_x": .5, "center_y": .5}
+                    padding: 0
+                    MDTabs:
+                        id: tabs
+                        tab_hint_x: True
+                        Tab:
+                            icon: "school"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Education."
+                                    halign: "center"
+                        Tab:
+                            icon: "head-heart"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Mental health."
+                                    halign: "center"
+                        Tab:
+                            icon: "dumbbell"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Sleep, nutrition, exercise."
+                                    halign: "center"
+                        Tab:
+                            icon: "star-shooting"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Aspirations."
+                                    halign: "center"
 
             MDBottomNavigationItem:
                 name: 'education'

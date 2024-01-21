@@ -1,5 +1,11 @@
 from kivy.uix.screenmanager import Screen, ScreenManager
 from database import query, update
+from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.tab import MDTabsBase
+
+
+class Tab(MDFloatLayout, MDTabsBase):
+    pass
 
 
 class StartingScreen(Screen):
