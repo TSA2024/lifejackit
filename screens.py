@@ -15,11 +15,20 @@ class CreateAccountScreen(Screen):
     def take_username(self):
         username = self.ids.username.text
         password = self.ids.password.text
-        if 0 < len(username) <= 20 and 0 < len(password) <= 50:
-            self.box_is_filled = True
-        else:
-            self.box_is_filled = False
-            # TODO: Figure out how to get screen manager elsewhere and change here maybe.
+        self.box_is_filled = (self.check_username_length(self.ids.username)
+                              and self.check_password_length(self.ids.password))
+        if not self.box_is_filled:
+            return
+
+    def check_username_length(self, instance_textfield):
+        username = instance_textfield.text
+        instance_textfield.error = not (0 < len(username) <= 20)
+        return instance_textfield.error
+
+    def check_password_length(self, instance_textfield):
+        password = self.ids.password.text
+        instance_textfield.error = not(0 < len(password) <= 50)
+        return instance_textfield.error
 
 
 class LogInScreen(Screen):
