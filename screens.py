@@ -1,4 +1,9 @@
 from kivy.uix.screenmanager import Screen, ScreenManager
+from kivymd.uix.chip import MDChip
+from kivymd.uix.card import MDCard
+from kivy.uix.popup import Popup
+from kivymd.uix.list import OneLineAvatarIconListItem
+from kivymd.uix.textfield import MDTextField
 
 
 class StartingScreen(Screen):
@@ -6,6 +11,23 @@ class StartingScreen(Screen):
 
 
 class MainScreen(Screen):
+    pass
+
+
+class Popup9(Popup):
+    pass
+
+
+class ClassListItem(OneLineAvatarIconListItem):
+    pass
+
+
+class GradeCarousel(MDCard):
+    def open9(self):
+        Popup9().open()
+
+
+class CourseField(MDTextField):
     pass
 
 

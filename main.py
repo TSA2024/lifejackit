@@ -18,7 +18,6 @@ class LifeJackIt(MDApp):
         self.sm.add_widget(LogInScreen(name='login'))
         return self.sm
 
-
 if __name__ == '__main__':
     create_tables()
     LifeJackIt().run()

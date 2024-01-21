@@ -155,6 +155,7 @@
 <MainScreen>
     BoxLayout:
         orientation: 'vertical'
+
         MDBottomNavigation:
             id: tabs
             panel_color: 190/255, 210/255, 247/255, 1
@@ -165,16 +166,15 @@
                 name: 'blog'
                 text: "Blog"
                 icon: 'book-open'
+
                 BoxLayout:
                     orientation: "vertical"
                     padding: 50
-                    MDLabel:
-                        text: 'Self-Improvement'
-                        halign: 'center'
 
                     MDRaisedButton:
                         text: "kljdsjklfd"
                         pos_hint: {"center_x": .5, "center_y": .5}
+
 
             MDBottomNavigationItem:
                 name: 'education'
@@ -184,6 +184,23 @@
                 MDLabel:
                     text: 'Education'
                     halign: 'center'
+
+                MDCarousel:
+                    id: programs
+                    size_hint: 0.85, 0.95
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                    opacity: 1
+                    direction: 'right'
+
+                    GradeCarousel:
+                        MDRaisedButton:
+                            text: "Edit"
+                            pos_hint: {"center_x": .5, "center_y": .5}
+                            on_release: self.parent.open9()
+                    GradeCarousel:
+                    GradeCarousel:
+                    GradeCarousel:
+
 
             MDBottomNavigationItem:
                 name: 'help'
@@ -204,3 +221,45 @@
                     pos_hint: {"center_x": .5, "center_y": .5}
                     on_release:
                         app.root.current = "starting"
+
+<Popup9>
+    size_hint: 0.7, 0.7
+    halign: "center"
+    valign: "center"
+    title: "Freshman Courses"
+    title_align: "center"
+    title_size: 30
+    separator_height: 3
+    separator_color: 0, 0, 0, 1
+    title_color: 0, 0, 0, 1
+    background: ""
+
+    MDRelativeLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        MDRaisedButton:
+            text: "Back to Main"
+            font_size: 14
+            md_bg_color: 1, 150/255,79/255, 1
+            pos_hint: {'center_x': 0.25, 'center_y': 0.2}
+            on_release:
+                root.to_main()
+                root.dismiss()
+        MDRaisedButton:
+            text: "View Program"
+            font_size: 14
+            md_bg_color: 1, 150/255,79/255, 1
+            pos_hint: {'center_x': 0.75, 'center_y': 0.2}
+            on_release:
+                root.dismiss()
+
+
+<GradeCarousel>
+    ClassListItem:
+    ClassListItem:
+    ClassListItem:
+
+<ClassListItem>
+    IconRightWidget:
+        icon: "pencil"
