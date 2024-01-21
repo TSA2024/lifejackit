@@ -8,12 +8,12 @@
             pos: self.pos
             size: self.size
     MDRaisedButton:
-        text: "Create an account."
+        text: "Create an account"
         pos_hint: {"center_x": 0.5, "center_y": 0.3}
         on_release:
             app.root.current = "account"
     MDRaisedButton:
-        text: "Log in."
+        text: "Log in"
         pos_hint: {"center_x": 0.5, "center_y": 0.2}
         on_release:
             app.root.current = "login"
@@ -85,11 +85,9 @@
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled else "account"
-            MDRaisedButton:
-                size_hint: None, None
-                size: 0.5, 0.5
-                text: "Return"
-                font_size: "10sp"
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_x": .08, "center_y": 0.08}
                 on_release:
                     app.root.current = "starting"
 
@@ -160,11 +158,9 @@
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled_login else "login"
-            MDRaisedButton:
-                size_hint: None, None
-                size: 0.5, 0.5
-                text: "Return"
-                font_size: "10sp"
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_x": .15, "center_y": 0.15}
                 on_release:
                     app.root.current = "starting"
 
