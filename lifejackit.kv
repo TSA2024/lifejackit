@@ -185,8 +185,9 @@
                     orientation: "vertical"
                     padding: 0
                     MDTabs:
-                        id: tabs
+                        id: blog_tabs
                         tab_hint_x: True
+                        background_color: 8/255, 77/255, 204/255, 1
                         Tab:
                             icon: "school"
                             BoxLayout:
@@ -243,8 +244,16 @@
                 text: "Settings"
                 icon: 'cog'
 
-                MDRaisedButton:
-                    text: "Return to Starting Screen"
-                    pos_hint: {"center_x": .25, "center_y": 0.05}
-                    on_release:
-                        app.root.current = "starting"
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 25
+                    MDFlatButton:
+                        text: "Log out"
+                        theme_text_color: "Custom"
+                        padding: 100, 8
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        font_size: "17sp"
+                        text_color: 179/255, 0, 0, 1
+                        line_color: 179/255, 0, 0, 1
+                        on_release:
+                            app.root.current = "starting"
