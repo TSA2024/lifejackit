@@ -172,6 +172,7 @@
 <MainScreen>
     BoxLayout:
         orientation: 'vertical'
+
         MDBottomNavigation:
             id: tabs
             panel_color: 190/255, 210/255, 247/255, 1
@@ -221,17 +222,6 @@
                                 MDLabel:
                                     text: "Aspirations."
                                     halign: "center"
-
-                    MDTopAppBar:
-                        title: "Welcome to the Blog"
-                        left_action_items: [["menu", lambda x: root.callback(x)]]
-                    MDLabel:
-                        text: 'Self-Improvement'
-                        halign: 'center'
-
-                    MDRaisedButton:
-                        text: "kljdsjklfd"
-                        pos_hint: {"center_x": .5, "center_y": .5}
 
 
             MDBottomNavigationItem:
