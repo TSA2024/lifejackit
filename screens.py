@@ -1,5 +1,6 @@
 from kivy.core.window import Window
 from kivy.metrics import dp
+from kivy.properties import NumericProperty
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivymd.uix.chip import MDChip
 from kivymd.uix.card import MDCard
@@ -57,8 +58,6 @@ class MainScreen(Screen):
 
 
 
-class Popup9(Popup):
-    pass
 
 
 class ClassListItem(OneLineAvatarIconListItem):
@@ -66,8 +65,8 @@ class ClassListItem(OneLineAvatarIconListItem):
 
 
 class GradeCarousel(MDCard):
-    def open9(self):
-        Popup9().open()
+    program_number = NumericProperty(0)
+
 
 
 class CourseField(MDTextField):
