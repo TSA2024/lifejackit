@@ -1,19 +1,15 @@
 from kivy.core.window import Window
 from kivy.metrics import dp
-from kivy.uix.screenmanager import Screen, ScreenManager
-from kivy.metrics import dp
+
+from kivy.uix.screenmanager import Screen
 from kivy.uix.accordion import AccordionItem
 from kivy.uix.label import Label
 
-from data import faq
-
-from kivymd.app import MDApp
-from kivymd.uix.menu import MDDropdownMenu
-from kivymd.uix.snackbar import Snackbar
-
-from database import query, update
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.tab import MDTabsBase
+
+from database import query, update
+from data import faq
 
 
 class Tab(MDFloatLayout, MDTabsBase):
