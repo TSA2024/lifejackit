@@ -6,7 +6,10 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, FadeTransition
 
 from screens import *
-from database import create_tables
+#from database import create_tables
+
+from kivy.lang import Builder
+from kivymd.uix.menu import MDDropdownMenu
 
 # Make sure you set DEBUG=1 in your PyCharm run configuration environment variables. Maybe.
 
@@ -38,9 +41,9 @@ class LifeJackIt(MDApp):
             self.sm.add_widget(CreateAccountScreen(name='account'))
             self.sm.add_widget(LogInScreen(name='login'))
             sm = self.sm
-        return Factory.MainScreen()
+        return Factory.CreateAccountScreen()
 
 
 if __name__ == '__main__':
-    create_tables()
+    # create_tables()
     LifeJackIt().run()

@@ -20,5 +20,21 @@ class LifeJackIt(MDApp):
 
 
 if __name__ == '__main__':
-    create_tables()
+    # create_tables()
     LifeJackIt().run()
+
+KV = '''
+MDBoxLayout:
+    orientation: "vertical"
+
+    MDTopAppBar:
+        title: "MDTopAppBar"
+        left_action_items: [["menu", lambda x: app.callback(x)]]
+        right_action_items: [["dots-vertical", lambda x: app.callback(x)]]
+
+    MDLabel:
+        text: "Content"
+        halign: "center"
+'''
+
+

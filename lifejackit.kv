@@ -9,12 +9,12 @@
             pos: self.pos
             size: self.size
     MDRaisedButton:
-        text: "Create an account."
+        text: "Create an account"
         pos_hint: {"center_x": 0.5, "center_y": 0.3}
         on_release:
             app.root.current = "account"
     MDRaisedButton:
-        text: "Log in."
+        text: "Log in"
         pos_hint: {"center_x": 0.5, "center_y": 0.2}
         on_release:
             app.root.current = "login"
@@ -58,9 +58,14 @@
                 multiline: False
                 font_size:"15dp"
                 max_text_length: 20
+                helper_text_mode: "on_error"
+                on_text_validate: self.parent.parent.parent.check_username_length(self)
+                on_focus:
+                    self.helper_text = ""
+                    self.parent.parent.parent.check_username_length(self)
                 #hint_text_color_normal: "black"
             MDTextField:
-                id:password
+                id: password
                 hint_text: "Password"
                 hint_text_size: "5sp"
                 mode: "rectangle"
@@ -71,18 +76,19 @@
                 line_color_normal: 0/255, 0/255, 0/255, 1
                 multiline: False
                 font_size:"15dp"
+                helper_text_mode: "on_error"
                 max_text_length: 50
+                on_text_validate: self.parent.parent.parent.check_password_length(self)
+                on_focus: self.parent.parent.parent.check_password_length(self)
             MDRaisedButton:
                 text: "Continue"
                 pos_hint: {"center_x": 0.5, "center_y": 0.15}
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled else "account"
-            MDRaisedButton:
-                size_hint: None, None
-                size: 0.5, 0.5
-                text: "Return"
-                font_size: "10sp"
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_x": .08, "center_y": 0.08}
                 on_release:
                     app.root.current = "starting"
 
@@ -125,6 +131,10 @@
                 multiline: False
                 font_size:"15dp"
                 max_text_length: 20
+                on_text_validate: self.parent.parent.parent.check_username_length(self)
+                on_focus:
+                    self.helper_text = ""
+                    self.parent.parent.parent.check_username_length(self)
                 #hint_text_color_normal: "black"
             MDTextField:
                 id: password_login
@@ -139,17 +149,19 @@
                 multiline: False
                 font_size:"15dp"
                 max_text_length: 50
+                on_text_validate: self.parent.parent.parent.check_password_length(self)
+                on_focus:
+                    self.helper_text = ""
+                    self.parent.parent.parent.check_password_length(self)
             MDRaisedButton:
                 text: "Continue"
                 pos_hint: {"center_x": 0.5, "center_y": 0.15}
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled_login else "login"
-            MDRaisedButton:
-                size_hint: None, None
-                size: 0.5, 0.5
-                text: "Return"
-                font_size: "10sp"
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_x": .15, "center_y": 0.15}
                 on_release:
                     app.root.current = "starting"
 
@@ -168,7 +180,51 @@
                 icon: 'book-open'
                 MDBoxLayout:
                     orientation: "vertical"
-                    padding: 50
+                    padding: 0
+                    
+                    MDTabs:
+                        id: blog_tabs
+                        tab_hint_x: True
+                        background_color: 8/255, 77/255, 204/255, 1
+                        Tab:
+                            icon: "school"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Education."
+                                    halign: "center"
+                        Tab:
+                            icon: "head-heart"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Mental health."
+                                    halign: "center"
+                        Tab:
+                            icon: "dumbbell"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Sleep, nutrition, exercise."
+                                    halign: "center"
+                        Tab:
+                            icon: "star-shooting"
+                            BoxLayout:
+                                orientation: "vertical"
+                                padding: 50
+                                MDLabel:
+                                    text: "Aspirations."
+                                    halign: "center"
+
+                    MDTopAppBar:
+                        title: "Welcome to the Blog"
+                        left_action_items: [["menu", lambda x: root.callback(x)]]
+                    MDLabel:
+                        text: 'Self-Improvement'
+                        halign: 'center'
 
                     MDGridLayout:
                         height: self.minimum_height
@@ -253,6 +309,7 @@
                                 keep_ratio: True
                                 pos: self.pos
 
+
             MDBottomNavigationItem:
                 name: 'education'
                 text: "Education"
@@ -294,8 +351,16 @@
                 text: "Settings"
                 icon: 'cog'
 
-                MDRaisedButton:
-                    text: "Return to Starting Screen"
-                    pos_hint: {"center_x": .25, "center_y": 0.05}
-                    on_release:
-                        app.root.current = "starting"
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 25
+                    MDFlatButton:
+                        text: "Log out"
+                        theme_text_color: "Custom"
+                        padding: 100, 8
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        font_size: "17sp"
+                        text_color: 179/255, 0, 0, 1
+                        line_color: 179/255, 0, 0, 1
+                        on_release:
+                            app.root.current = "starting"
