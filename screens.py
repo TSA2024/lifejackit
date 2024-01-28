@@ -1,14 +1,15 @@
 from kivy.core.window import Window
 from kivy.metrics import dp
-from kivy.uix.screenmanager import Screen, ScreenManager
 
-from kivymd.app import MDApp
-from kivymd.uix.menu import MDDropdownMenu
-from kivymd.uix.snackbar import Snackbar
+from kivy.uix.screenmanager import Screen
+from kivy.uix.accordion import AccordionItem
+from kivy.uix.label import Label
 
-from database import query, update
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.tab import MDTabsBase
+
+from database import query, update
+from data import faq
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -22,18 +23,23 @@ class StartingScreen(Screen):
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.display_menu = MDDropdownMenu(
-            items=[
-                {
-                    "text": option,
-                    "on_release": lambda x=option: self.select(x)
-                } for option in ("Item 1", "Item 2", "Item 3")
-            ],
-            width_mult=3,
-            max_height=dp(150),
-        )
-
-
+        self.ids.box.clear_widgets()
+        for q in faq:
+            a = AccordionItem(
+                title=q,
+            )
+            self.ids.box.add_widget(a)
+            height = dp(50)
+            a.add_widget(
+                Label(
+                    text=faq[q],
+                    text_size=(self.width*3.4, None),
+                    halign="left",
+                    color=(0, 0, 0, 1),
+                    height=height,
+                )
+            )
+            self.ids.box.height += height
 
 
 class CreateAccountScreen(Screen):
