@@ -1,6 +1,11 @@
 from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.metrics import dp
+from kivy.uix.accordion import AccordionItem
+from kivy.uix.label import Label
+
+from data import faq
 
 from kivymd.app import MDApp
 from kivymd.uix.menu import MDDropdownMenu
@@ -22,34 +27,23 @@ class StartingScreen(Screen):
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.display_menu = MDDropdownMenu(
-            items=[
-                {
-                    "text": option,
-                    "on_release": lambda x=option: self.select(x)
-                } for option in ("Item 1", "Item 2", "Item 3")
-            ],
-            width_mult=3,
-            max_height=dp(150),
-        )
-
-    def select(self, text_item):
-        self.menu.dismiss()
-        #Snackbar(text=text_item).open()
-        print(text_item)
-
-    def new_data_table_size(self):
-        new_values = (
-                ("", max(Window.width * 0.099, dp(55))),
-                ("", max(Window.width * 0.099, dp(55))),
-                ("", max(Window.width * 0.099, dp(55))),
-        )
-        return new_values
-
-    def callback(self, button):
-        self.display_menu.caller = button
-        self.display_menu.open()
-
+        self.ids.box.clear_widgets()
+        for q in faq:
+            a = AccordionItem(
+                title=q,
+            )
+            self.ids.box.add_widget(a)
+            height = dp(50)
+            a.add_widget(
+                Label(
+                    text=faq[q],
+                    text_size=(self.width*3.4, None),
+                    halign="left",
+                    color=(0, 0, 0, 1),
+                    height=height,
+                )
+            )
+            self.ids.box.height += height
 
 
 class CreateAccountScreen(Screen):

@@ -1,4 +1,4 @@
-# Icons: https://materialdesignicons.com/
+#:import Window kivy.core.window.Window
 
 <StartingScreen>
     canvas:
@@ -166,8 +166,8 @@
                     app.root.current = "starting"
 
 <MainScreen>
-    BoxLayout:
-        orientation: 'vertical'
+    MDBoxLayout:
+        orientation: "vertical"
         MDBottomNavigation:
             id: tabs
             panel_color: 190/255, 210/255, 247/255, 1
@@ -178,7 +178,7 @@
                 name: 'blog'
                 text: "Blog"
                 icon: 'book-open'
-                BoxLayout:
+                MDBoxLayout:
                     orientation: "vertical"
                     padding: 0
                     
@@ -226,9 +226,88 @@
                         text: 'Self-Improvement'
                         halign: 'center'
 
-                    MDRaisedButton:
-                        text: "kljdsjklfd"
-                        pos_hint: {"center_x": .5, "center_y": .5}
+                    MDGridLayout:
+                        height: self.minimum_height
+                        padding: 50
+                        size_hint: (None, None)
+                        size: (Window.width, Window.height)
+                        cols: 2
+
+                        MDRoundFlatButton:
+                            size_hint: (None, None)
+                            size: (Window.width / 2, Window.height / 2)
+                            pos: (50, Window.height / 2)
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+
+                            Image:
+                                source: "Untitled design.png"
+                                size: self.size
+                                allow_stretch: True
+                                keep_ratio: True
+                                pos: self.pos
+
+                        MDRoundFlatButton:
+                            size_hint: (None, None)
+                            size: (Window.width / 2, Window.height / 2)
+                            pos: (Window.width / 2 + 50, Window.height / 2)
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+
+                            Image:
+                                source: "Untitled design.png"
+                                size: self.size
+                                allow_stretch: True
+                                keep_ratio: True
+                                pos: self.pos
+
+                        MDRoundFlatButton:
+                            size_hint: (None, None)
+                            size: (Window.width / 2, Window.height / 2)
+                            pos: (50, 50)
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+
+                            Image:
+                                source: "Untitled design.png"
+                                size: self.size
+                                allow_stretch: True
+                                keep_ratio: True
+                                pos: self.pos
+
+                        MDRoundFlatButton:
+                            size_hint: (None, None)
+                            size: (Window.width / 2, Window.height / 2)
+                            pos: (Window.width / 2 + 50, 50)
+
+                            canvas:
+                                Color:
+                                    rgba: 0.5, 0, 0.5, 1
+                                Rectangle:
+                                    size: self.size
+                                    pos: self.pos
+
+                            Image:
+                                source: "Untitled design.png"
+                                size: self.size
+                                allow_stretch: True
+                                keep_ratio: True
+                                pos: self.pos
 
 
             MDBottomNavigationItem:
@@ -241,13 +320,31 @@
                     halign: 'center'
 
             MDBottomNavigationItem:
-                name: 'help'
+                name: "help"
                 text: "Help"
                 icon: 'chat-question'
+                ScrollView:
+                    bar_width: 3
+                    scroll_type: ['bars', 'content']
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint : 1, None
+                        height: self.minimum_height
+                        padding: (2, 0, 2, 0)
+                        Label:
+                            text: "Frequently Asked Questions (FAQs)"
+                            font_size: 23
+                            bold: True
+                            color: 0, 0, 0, 1
+                            text_size: self.width, None
+                            halign: "center"
+                            size_hint: (1, None)
+                        Accordion:
+                            id: box
+                            orientation: "vertical"
+                            size_hint: (1, None)
+                            height: 200
 
-                MDLabel:
-                    text: 'HI ERIC HI KISHEN HI ELI :D'
-                    halign: 'center'
 
             MDBottomNavigationItem:
                 name: 'settings'
