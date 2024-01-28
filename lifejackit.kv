@@ -1,4 +1,4 @@
-# Icons: https://materialdesignicons.com/
+#:import Window kivy.core.window.Window
 
 <StartingScreen>
     canvas:
@@ -166,9 +166,8 @@
                     app.root.current = "starting"
 
 <MainScreen>
-    BoxLayout:
-        orientation: 'vertical'
-
+    MDBoxLayout:
+        orientation: "vertical"
         MDBottomNavigation:
             id: tabs
             panel_color: 190/255, 210/255, 247/255, 1
@@ -179,7 +178,7 @@
                 name: 'blog'
                 text: "Blog"
                 icon: 'book-open'
-                BoxLayout:
+                MDBoxLayout:
                     orientation: "vertical"
                     padding: 0
                     
@@ -220,7 +219,6 @@
                                     text: "Aspirations."
                                     halign: "center"
 
-
             MDBottomNavigationItem:
                 name: 'education'
                 text: "Education"
@@ -231,13 +229,31 @@
                     halign: 'center'
 
             MDBottomNavigationItem:
-                name: 'help'
+                name: "help"
                 text: "Help"
                 icon: 'chat-question'
+                ScrollView:
+                    bar_width: 3
+                    scroll_type: ['bars', 'content']
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint : 1, None
+                        height: self.minimum_height
+                        padding: (2, 0, 2, 0)
+                        Label:
+                            text: "Frequently Asked Questions (FAQs)"
+                            font_size: 23
+                            bold: True
+                            color: 0, 0, 0, 1
+                            text_size: self.width, None
+                            halign: "center"
+                            size_hint: (1, None)
+                        Accordion:
+                            id: box
+                            orientation: "vertical"
+                            size_hint: (1, None)
+                            height: 200
 
-                MDLabel:
-                    text: 'HI ERIC HI KISHEN HI ELI :D'
-                    halign: 'center'
 
             MDBottomNavigationItem:
                 name: 'settings'
