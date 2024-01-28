@@ -1,6 +1,9 @@
 from kivy.uix.screenmanager import Screen, ScreenManager
-from kivymd.uix.menu import MDDropdownMenu
 from kivy.metrics import dp
+from kivy.uix.accordion import AccordionItem
+from kivy.uix.label import Label
+
+from data import faq
 
 
 class StartingScreen(Screen):
@@ -10,27 +13,24 @@ class StartingScreen(Screen):
 class MainScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        questions = ["Is it too late to start using LifeJackit after freshmen year?", "What's the purpose of this app?",
-                     "How do I start turning my life around today?"]
-        menu_items = [
-            {
-                "text": question,
-                "viewclass": "OneLineListItem",
-                "on_release": lambda x=question: self.menu_callback(x),
-            } for question in questions
-        ]
-        self.help_menu = MDDropdownMenu(
-            caller=self.ids.help_button,
-            items=menu_items,
-            width_mult=8,
-            max_height=dp(200),
-            position="center",
+        self.ids.box.clear_widgets()
+        for q in faq:
+            a = AccordionItem(
+                title=q,
+            )
+            self.ids.box.add_widget(a)
+            height = dp(50)
+            a.add_widget(
+                Label(
+                    text=faq[q],
+                    text_size=(self.width*3.4, None),
+                    halign="left",
+                    color=(0, 0, 0, 1),
+                    height=height,
+                )
+            )
+            self.ids.box.height += height
 
-
-        )
-
-    def menu_callback(self, text_item):
-        print(text_item)
 
 
 class CreateAccountScreen(Screen):

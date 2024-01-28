@@ -266,14 +266,28 @@
                 name: "help"
                 text: "Help"
                 icon: 'chat-question'
+                ScrollView:
+                    bar_width: 3
+                    scroll_type: ['bars', 'content']
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint : 1, None
+                        height: self.minimum_height
+                        padding: (2, 0, 2, 0)
+                        Label:
+                            text: "Frequently Asked Questions (FAQs)"
+                            font_size: 23
+                            bold: True
+                            color: 0, 0, 0, 1
+                            text_size: self.width, None
+                            halign: "center"
+                            size_hint: (1, None)
+                        Accordion:
+                            id: box
+                            orientation: "vertical"
+                            size_hint: (1, None)
+                            height: 200
 
-                MDDropDownItem:
-                    id: help_button
-                    text: 'Frequently Asked Questions'
-                    font_size: 36
-                    pos_hint: {'center_x': .5, 'center_y': .95}
-                    size_hint: (1,None)
-                    on_release: root.help_menu.open()
 
             MDBottomNavigationItem:
                 name: 'settings'
