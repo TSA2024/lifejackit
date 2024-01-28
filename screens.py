@@ -33,22 +33,6 @@ class MainScreen(Screen):
             max_height=dp(150),
         )
 
-    def select(self, text_item):
-        self.menu.dismiss()
-        #Snackbar(text=text_item).open()
-        print(text_item)
-
-    def new_data_table_size(self):
-        new_values = (
-                ("", max(Window.width * 0.099, dp(55))),
-                ("", max(Window.width * 0.099, dp(55))),
-                ("", max(Window.width * 0.099, dp(55))),
-        )
-        return new_values
-
-    def callback(self, button):
-        self.display_menu.caller = button
-        self.display_menu.open()
 
 
 

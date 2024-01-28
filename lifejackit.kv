@@ -194,15 +194,19 @@
                         id: blog_tabs
                         tab_hint_x: True
                         background_color: 8/255, 77/255, 204/255, 1
+
                         Tab:
                             icon: "school"
-                            BoxLayout:
-                                orientation: "vertical"
-                                padding: 50
+                            FloatLayout:
                                 MDLabel:
                                     text: "Hello, congratulations for taking the first steps to turning your life around!\n\nUse this Blog section to learn about Education, Mental Health, Nutrition, and discover your Aspirations! "
                                     pos_hint: {"center_x": 0.5, "center_y": 1}
-                                    size_hint: 1.25, 0.5
+                                    halign: "center"
+                                    valign: "top"
+
+
+
+
 
 
                         Tab:
