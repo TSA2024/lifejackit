@@ -232,27 +232,67 @@
                 name: "help"
                 text: "Help"
                 icon: 'chat-question'
-                ScrollView:
-                    bar_width: 3
-                    scroll_type: ['bars', 'content']
-                    BoxLayout:
-                        orientation: "vertical"
-                        size_hint : 1, None
-                        height: self.minimum_height
-                        padding: (2, 0, 2, 0)
-                        Label:
-                            text: "Frequently Asked Questions (FAQs)"
-                            font_size: 23
-                            bold: True
-                            color: 0, 0, 0, 1
-                            text_size: self.width, None
-                            halign: "center"
-                            size_hint: (1, None)
-                        Accordion:
-                            id: box
-                            orientation: "vertical"
-                            size_hint: (1, None)
-                            height: 200
+                MDTabs:
+                    id: help_tabs
+                    tab_hint_x: True
+                    background_color: 8/255, 77/255, 204/255, 1
+                    Tab:
+                        title: "FAQs"
+                        icon: "frequently-asked-questions"
+                        ScrollView:
+                            bar_width: 3
+                            scroll_type: ['bars', 'content']
+                            BoxLayout:
+                                orientation: "vertical"
+                                size_hint : 1, None
+                                height: self.minimum_height
+                                padding: (2, 0, 2, 0)
+                                Label:
+                                    text: "Frequently Asked Questions (FAQs)"
+                                    font_size: 23
+                                    bold: True
+                                    color: 0, 0, 0, 1
+                                    text_size: self.width, None
+                                    halign: "center"
+                                    size_hint: (1, None)
+                                Accordion:
+                                    id: box
+                                    orientation: "vertical"
+                                    size_hint: (1, None)
+                                    height: 200
+                    Tab:
+                        title: "Appointments"
+                        icon: "calendar-clock"
+                        ScrollView:
+                            bar_width: 3
+                            scroll_type: ['bars', 'content']
+                            BoxLayout:
+                                orientation: "vertical"
+                                size_hint : 1, None
+                                height: self.minimum_height
+                                padding: (2, 0, 2, 0)
+                                Label:
+                                    text: "Appointments"
+                                    font_size: 23
+                                    bold: True
+                                    color: 0, 0, 0, 1
+                                    text_size: self.width, None
+                                    halign: "center"
+                                    size_hint: (1, None)
+                                MDGridLayout:
+                                    cols: 1
+                                    id: appointments
+                                    size_hint: (1, .7)
+                                    padding: 7
+                                    spacing: 10
+                                Label:
+                                    text: "Make an appointment"
+                                    font_size: 18
+                                    bold: True
+                                    color: 0, 0, 0, 1
+                                    text_size: self.width * .9, None
+                                MDCard:
+
 
 
             MDBottomNavigationItem:

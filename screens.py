@@ -41,6 +41,11 @@ class MainScreen(Screen):
             )
             self.ids.box.height += height
 
+        """for i in range(3):
+            self.ids.appointments.add_widget(
+                
+            )"""
+
 
 class CreateAccountScreen(Screen):
     box_is_filled = False
