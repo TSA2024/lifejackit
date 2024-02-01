@@ -197,50 +197,85 @@
                         Tab:
                             icon: "school"
                             FloatLayout:
-                                MDLabel:
-                                    text: "Hello, congratulations for taking the first steps to turning your life around!\n\nUse this Blog section to learn about Education, Mental Health, Nutrition, and discover your Aspirations! "
-                                    pos_hint: {"center_x": 0.5, "center_y": 1}
-                                    halign: "center"
-                                    valign: "top"
-
-
-
-
-
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "200dp", "50dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 15
+                                        text: "[b]Education[/b]"
+                                        markup: True
+                                        halign: "center"
+                                        valign: "middle"
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "350dp", "75dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.78}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 12
+                                        text: "[b]Congratulations! If you're here, then you've already made it so far.\n\nUse this blog section to learn how to turn your life around.[/b]"
+                                        markup: True
 
                         Tab:
                             icon: "head-heart"
-                            BoxLayout:
-                                orientation: "vertical"
-                                padding: 50
-                                MDLabel:
-                                    text: "Mental health."
-                                    halign: "center"
+                            FloatLayout:
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "200dp", "50dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 15
+                                        text: "[b]Mental Health[/b]"
+                                        markup: True
+                                        halign: "center"
+                                        valign: "middle"
                         Tab:
                             icon: "dumbbell"
-                            BoxLayout:
-                                orientation: "vertical"
-                                padding: 50
-                                MDLabel:
-                                    text: "Sleep, nutrition, exercise."
-                                    halign: "center"
+                            FloatLayout:
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "200dp", "50dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 15
+                                        text: "[b]Nutrition and Exercise[/b]"
+                                        markup: True
+                                        halign: "center"
+                                        valign: "middle"
                         Tab:
                             icon: "star-shooting"
-                            BoxLayout:
-                                orientation: "vertical"
-                                padding: 50
-                                MDLabel:
-                                    text: "Aspirations."
-                                    halign: "center"
+                            FloatLayout:
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "200dp", "50dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 15
+                                        text: "[b]Aspirations[/b]"
+                                        markup: True
+                                        halign: "center"
+                                        valign: "middle"
 
             MDBottomNavigationItem:
-                name: 'education'
-                text: "Education"
+                name: 'sChool'
+                text: "School"
                 icon: 'school'
 
-                MDLabel:
-                    text: 'Education'
-                    halign: 'center'
 
             MDBottomNavigationItem:
                 name: "help"
