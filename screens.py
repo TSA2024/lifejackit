@@ -41,23 +41,20 @@ class MainScreen(Screen):
 
     def select(self, text_item):
         self.menu.dismiss()
-        #Snackbar(text=text_item).open()
+        # Snackbar(text=text_item).open()
         print(text_item)
 
     def new_data_table_size(self):
         new_values = (
-                ("", max(Window.width * 0.099, dp(55))),
-                ("", max(Window.width * 0.099, dp(55))),
-                ("", max(Window.width * 0.099, dp(55))),
+            ("", max(Window.width * 0.099, dp(55))),
+            ("", max(Window.width * 0.099, dp(55))),
+            ("", max(Window.width * 0.099, dp(55))),
         )
         return new_values
 
     def callback(self, button):
         self.display_menu.caller = button
         self.display_menu.open()
-
-
-
 
 
 class ClassListItem(OneLineAvatarIconListItem):
@@ -68,8 +65,23 @@ class GradeCarousel(MDCard):
     program_number = NumericProperty(0)
 
 
-
 class CourseField(MDTextField):
+    pass
+
+
+class Course1Screen(Screen):
+    pass
+
+
+class Course2Screen(Screen):
+    pass
+
+
+class Course3Screen(Screen):
+    pass
+
+
+class Course4Screen(Screen):
     pass
 
 
@@ -80,7 +92,7 @@ class CreateAccountScreen(Screen):
         username = self.ids.username
         password = self.ids.password
         self.box_is_filled = not (self.check_username_length(username)
-                              or self.check_password_length(password))
+                                  or self.check_password_length(password))
         if self.box_is_filled:
             if query("SELECT * FROM users WHERE username = %s", (username.text,)).fetchone() is None:
                 update("INSERT INTO users (username, password) VALUES (%s, %s)", (username.text, password.text))
@@ -97,7 +109,7 @@ class CreateAccountScreen(Screen):
 
     def check_password_length(self, instance_textfield):
         password = instance_textfield.text
-        instance_textfield.error = not(0 < len(password) <= 50)
+        instance_textfield.error = not (0 < len(password) <= 50)
         return instance_textfield.error
 
 
@@ -108,9 +120,10 @@ class LogInScreen(Screen):
         username = self.ids.username_login
         password = self.ids.password_login
         self.box_is_filled_login = not (self.check_username_length(username)
-                              or self.check_password_length(password))
+                                        or self.check_password_length(password))
         if self.box_is_filled_login:
-            if query("SELECT * FROM users WHERE username = %s AND password = %s", (username.text, password.text)).fetchone() is None:
+            if query("SELECT * FROM users WHERE username = %s AND password = %s",
+                     (username.text, password.text)).fetchone() is None:
                 username.error = True
                 password.helper_text = "Invalid login."
                 password.error = True
@@ -123,5 +136,5 @@ class LogInScreen(Screen):
 
     def check_password_length(self, instance_textfield):
         password = instance_textfield.text
-        instance_textfield.error = not(0 < len(password) <= 50)
+        instance_textfield.error = not (0 < len(password) <= 50)
         return instance_textfield.error
