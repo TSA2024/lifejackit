@@ -1,15 +1,12 @@
 from os import getcwd, path
 from kivy.factory import Factory
 
+from screens import *
+
 from kivymd.tools.hotreload.app import MDApp
-from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager, FadeTransition
 
-from screens import *
-#from database import create_tables
-
-from kivy.lang import Builder
-from kivymd.uix.menu import MDDropdownMenu
+# from database import create_tables
 
 # Make sure you set DEBUG=1 in your PyCharm run configuration environment variables. Maybe.
 

@@ -1,4 +1,4 @@
-# Icons: https://materialdesignicons.com/
+#:import Window kivy.core.window.Window
 
 <StartingScreen>
     canvas:
@@ -9,12 +9,12 @@
             pos: self.pos
             size: self.size
     MDRaisedButton:
-        text: "Create an account."
+        text: "Create an account"
         pos_hint: {"center_x": 0.5, "center_y": 0.3}
         on_release:
             app.root.current = "account"
     MDRaisedButton:
-        text: "Log in."
+        text: "Log in"
         pos_hint: {"center_x": 0.5, "center_y": 0.2}
         on_release:
             app.root.current = "login"
@@ -86,11 +86,9 @@
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled else "account"
-            MDRaisedButton:
-                size_hint: None, None
-                size: 0.5, 0.5
-                text: "Return"
-                font_size: "10sp"
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_x": .08, "center_y": 0.08}
                 on_release:
                     app.root.current = "starting"
 
@@ -161,17 +159,15 @@
                 on_release:
                     self.parent.parent.parent.take_username()
                     app.root.current = "main" if self.parent.parent.parent.box_is_filled_login else "login"
-            MDRaisedButton:
-                size_hint: None, None
-                size: 0.5, 0.5
-                text: "Return"
-                font_size: "10sp"
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_x": .15, "center_y": 0.15}
                 on_release:
                     app.root.current = "starting"
 
 <MainScreen>
-    BoxLayout:
-        orientation: 'vertical'
+    MDBoxLayout:
+        orientation: "vertical"
 
         MDBottomNavigation:
             id: tabs
@@ -184,66 +180,105 @@
                 text: "Blog"
                 icon: 'book-open'
 
-                BoxLayout:
+                MDBoxLayout:
+
                     orientation: "vertical"
                     padding: 0
-                    
+                    canvas.before:
+                        Color:
+                            rgba: 232/255, 203/255, 146/255, 1
+                        Rectangle:
+                            source: "lifejackit background.png"
+                            pos: self.pos
+                            size: self.size
+
                     MDTabs:
-                        id: tabs
+                        id: blog_tabs
                         tab_hint_x: True
+                        background_color: 8/255, 77/255, 204/255, 1
+
                         Tab:
                             icon: "school"
-                            BoxLayout:
-                                orientation: "vertical"
-                                padding: 50
-                                MDLabel:
-                                    text: "Education."
-                                    halign: "center"
+                            FloatLayout:
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "200dp", "50dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 15
+                                        text: "[b]Education[/b]"
+                                        markup: True
+                                        halign: "center"
+                                        valign: "middle"
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "350dp", "75dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.78}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 12
+                                        text: "[b]Congratulations! If you're here, then you've already made it so far.\n\nUse this blog section to learn how to turn your life around.[/b]"
+                                        markup: True
+
                         Tab:
                             icon: "head-heart"
-                            BoxLayout:
-                                orientation: "vertical"
-                                padding: 50
-                                MDLabel:
-                                    text: "Mental health."
-                                    halign: "center"
+                            FloatLayout:
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "200dp", "50dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 15
+                                        text: "[b]Mental Health[/b]"
+                                        markup: True
+                                        halign: "center"
+                                        valign: "middle"
                         Tab:
                             icon: "dumbbell"
-                            BoxLayout:
-                                orientation: "vertical"
-                                padding: 50
-                                MDLabel:
-                                    text: "Sleep, nutrition, exercise."
-                                    halign: "center"
+                            FloatLayout:
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "200dp", "50dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 15
+                                        text: "[b]Nutrition and Exercise[/b]"
+                                        markup: True
+                                        halign: "center"
+                                        valign: "middle"
                         Tab:
                             icon: "star-shooting"
-                            BoxLayout:
-                                orientation: "vertical"
-                                padding: 50
-                                MDLabel:
-                                    text: "Aspirations."
-                                    halign: "center"
-
-                    MDTopAppBar:
-                        title: "Welcome to the Blog"
-                        left_action_items: [["menu", lambda x: root.callback(x)]]
-                    MDLabel:
-                        text: 'Self-Improvement'
-                        halign: 'center'
-
-                    MDRaisedButton:
-                        text: "kljdsjklfd"
-                        pos_hint: {"center_x": .5, "center_y": .5}
-
+                            FloatLayout:
+                                MDCard:
+                                    opacity: 0.65
+                                    padding: 4
+                                    size_hint: None, None
+                                    size: "200dp", "50dp"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                    MDLabel:
+                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                        font_size: 15
+                                        text: "[b]Aspirations[/b]"
+                                        markup: True
+                                        halign: "center"
+                                        valign: "middle"
 
             MDBottomNavigationItem:
-                name: 'education'
-                text: "Education"
+                name: 'sChool'
+                text: "School"
                 icon: 'school'
 
-                MDLabel:
-                    text: 'Education'
-                    halign: 'center'
 
                 MDCarousel:
                     id: programs
@@ -263,26 +298,50 @@
 
 
             MDBottomNavigationItem:
-                name: 'help'
+                name: "help"
                 text: "Help"
                 icon: 'chat-question'
+                ScrollView:
+                    bar_width: 3
+                    scroll_type: ['bars', 'content']
+                    BoxLayout:
+                        orientation: "vertical"
+                        size_hint : 1, None
+                        height: self.minimum_height
+                        padding: (2, 0, 2, 0)
+                        Label:
+                            text: "Frequently Asked Questions (FAQs)"
+                            font_size: 23
+                            bold: True
+                            color: 0, 0, 0, 1
+                            text_size: self.width, None
+                            halign: "center"
+                            size_hint: (1, None)
+                        Accordion:
+                            id: box
+                            orientation: "vertical"
+                            size_hint: (1, None)
+                            height: 200
 
-                MDLabel:
-                    text: 'HI ERIC HI KISHEN HI ELI :D'
-                    halign: 'center'
 
             MDBottomNavigationItem:
                 name: 'settings'
                 text: "Settings"
                 icon: 'cog'
 
-                MDRaisedButton:
-                    text: "Return to Starting Screen"
-                    pos_hint: {"center_x": .25, "center_y": 0.05}
-                    on_release:
-                        app.root.current = "starting"
-
-
+                BoxLayout:
+                    orientation: "vertical"
+                    padding: 25
+                    MDFlatButton:
+                        text: "Log out"
+                        theme_text_color: "Custom"
+                        padding: 100, 8
+                        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                        font_size: "17sp"
+                        text_color: 179/255, 0, 0, 1
+                        line_color: 179/255, 0, 0, 1
+                        on_release:
+                            app.root.current = "starting"
 
 
 <GradeCarousel>
@@ -433,7 +492,4 @@
     font_size:"15dp"
     helper_text_mode: "on_error"
     max_text_length: 50
-
-
-
 
