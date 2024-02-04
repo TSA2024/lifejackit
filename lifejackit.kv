@@ -165,6 +165,7 @@
                 on_release:
                     app.root.current = "starting"
 
+
 <MainScreen>
     MDBoxLayout:
         orientation: "vertical"
@@ -176,8 +177,8 @@
             font_style: ""  # Add font maybe.
 
             MDBottomNavigationItem:
-                name: 'blog'
-                text: "Blog"
+                name: 'journal'
+                text: "Journal"
                 icon: 'book-open'
 
                 MDBoxLayout:
@@ -196,34 +197,6 @@
                         id: blog_tabs
                         tab_hint_x: True
                         background_color: 8/255, 77/255, 204/255, 1
-
-                        Tab:
-                            icon: "school"
-                            FloatLayout:
-                                MDCard:
-                                    opacity: 0.65
-                                    padding: 4
-                                    size_hint: None, None
-                                    size: "200dp", "50dp"
-                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
-                                    MDLabel:
-                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
-                                        font_size: 15
-                                        text: "[b]Education[/b]"
-                                        markup: True
-                                        halign: "center"
-                                        valign: "middle"
-                                MDCard:
-                                    opacity: 0.65
-                                    padding: 4
-                                    size_hint: None, None
-                                    size: "350dp", "75dp"
-                                    pos_hint: {"center_x": 0.5, "center_y": 0.78}
-                                    MDLabel:
-                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
-                                        font_size: 12
-                                        text: "[b]Congratulations! If you're here, then you've already made it so far.\n\nUse this blog section to learn how to turn your life around.[/b]"
-                                        markup: True
 
                         Tab:
                             icon: "head-heart"
@@ -260,6 +233,13 @@
                         Tab:
                             icon: "star-shooting"
                             FloatLayout:
+                                canvas.before:
+                                    Color:
+                                        rgba: 232/255, 203/255, 146/255, 1
+                                    Rectangle:
+                                        source: "night_sky.png"
+                                        pos: self.pos
+                                        size: self.size
                                 MDCard:
                                     opacity: 0.65
                                     padding: 4
@@ -273,6 +253,77 @@
                                         markup: True
                                         halign: "center"
                                         valign: "middle"
+                                MDIconButton:
+                                    icon: "star"
+                                    pos_hint: {"center_x": 0.1, "center_y": 0.75}
+                                    style: "tonal"
+                                    theme_bg_color: "Custom"
+                                    md_bg_color: None
+                                    theme_icon_color: "Custom"
+                                    icon_color: "white"
+                                    on_release: app.show_popup()
+
+                                MDIconButton:
+                                    icon: "star"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.75}
+                                    style: "tonal"
+                                    theme_bg_color: "Custom"
+                                    md_bg_color: None
+                                    theme_icon_color: "Custom"
+                                    icon_color: "white"
+                                    on_release: app.show_popup()
+
+                                MDIconButton:
+                                    icon: "star"
+                                    pos_hint: {"center_x": 0.9, "center_y": 0.75}
+                                    style: "tonal"
+                                    theme_bg_color: "Custom"
+                                    md_bg_color: None
+                                    theme_icon_color: "Custom"
+                                    icon_color: "white"
+                                    on_release: app.show_popup()
+
+                                MDIconButton:
+                                    icon: "star"
+                                    pos_hint: {"center_x": 0.1, "center_y": 0.5}
+                                    style: "tonal"
+                                    theme_bg_color: "Custom"
+                                    md_bg_color: None
+                                    theme_icon_color: "Custom"
+                                    icon_color: "white"
+                                    on_release: app.show_popup()
+
+                                MDIconButton:
+                                    icon: "star"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                                    style: "tonal"
+                                    theme_bg_color: "Custom"
+                                    md_bg_color: None
+                                    theme_icon_color: "Custom"
+                                    icon_color: "white"
+                                    on_release: app.show_popup()
+
+                                MDIconButton:
+                                    icon: "star"
+                                    pos_hint: {"center_x": 0.9, "center_y": 0.5}
+                                    style: "tonal"
+                                    theme_bg_color: "Custom"
+                                    md_bg_color: None
+                                    theme_icon_color: "Custom"
+                                    icon_color: "white"
+                                    on_release: app.show_popup()
+
+                                MDIconButton:
+                                    icon: "pencil-outline"
+                                    pos_hint: {"center_x": 0.5, "center_y": 0.25}
+                                    style: "small"
+                                    theme_bg_color: "Custom"
+                                    md_bg_color: None
+                                    theme_icon_color: "Custom"
+                                    icon_color: "white"
+
+
+
 
             MDBottomNavigationItem:
                 name: 'sChool'
