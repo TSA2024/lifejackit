@@ -11,6 +11,8 @@ from kivymd.uix.tab import MDTabsBase
 from database import query, update
 from data import faq
 
+from kivy.uix.textinput import TextInput
+
 
 class Tab(MDFloatLayout, MDTabsBase):
     pass
