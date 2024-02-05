@@ -2,8 +2,10 @@ from kivy.core.window import Window
 from kivy.metrics import dp
 
 from kivy.uix.screenmanager import Screen
+from kivy.properties import StringProperty
 from kivy.uix.accordion import AccordionItem
 from kivy.uix.label import Label
+from kivymd.uix.card import MDCard
 
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.tab import MDTabsBase
@@ -21,6 +23,10 @@ class StartingScreen(Screen):
 
 
 class MainScreen(Screen):
+    appointments = []
+    keep = []
+    a = False
+
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.ids.box.clear_widgets()
@@ -40,11 +46,31 @@ class MainScreen(Screen):
                 )
             )
             self.ids.box.height += height
+        # Appointments stuff.
+        # TODO: Put actual appointments later.
 
-        """for i in range(3):
-            self.ids.appointments.add_widget(
-                
-            )"""
+        self.appointments = [
+            AppointmentCard(
+                person="Dr. Le",
+                date="2/15/2024",
+                time="12:00 PM"
+            ),
+            AppointmentCard(
+                person="Dr. Misra",
+                date="2/23/2024",
+                time="11:00 AM"
+            ),
+        ]
+        # TODO: FIX AGAIN
+        self.keep = [self.ids.a1, self.ids.no_appointments, self.ids.a2, self.ids.make_appointment, self.ids.a3]
+        self.ids.appointments.clear_widgets()
+        self.ids.appointments.add_widget(self.keep[0])
+        self.ids.appointments.add_widget(self.keep[1])
+        for appointment in self.appointments:
+            self.ids.appointments.add_widget(appointment)
+        for i in range(2, len(self.keep)):
+            self.ids.appointments.add_widget(self.keep[i])
+        self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(self.appointments) == 0 else ""
 
 
 class CreateAccountScreen(Screen):
@@ -99,3 +125,9 @@ class LogInScreen(Screen):
         password = instance_textfield.text
         instance_textfield.error = not(0 < len(password) <= 50)
         return instance_textfield.error
+
+
+class AppointmentCard(MDCard):
+    person = StringProperty()
+    date = StringProperty()
+    time = StringProperty()
