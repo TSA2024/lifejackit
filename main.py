@@ -3,11 +3,7 @@ from kivy.core.window import Window
 from kivy.uix.screenmanager import FadeTransition, ScreenManager
 
 from screens import *
-from kivy.uix.popup import Popup
-from kivy.uix.button import Button
-from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
+
 
 class LifeJackIt(MDApp):
     sm = None
@@ -24,23 +20,8 @@ class LifeJackIt(MDApp):
         self.sm.add_widget(Course3Screen(name='c3'))
         self.sm.add_widget(Course4Screen(name='c4'))
         return self.sm
-class LifeJackIt(MDApp):
-    if __name__ == '__main__':
-        LifeJackIt().run()
-
-KV = '''
-MDBoxLayout:
-    orientation: "vertical"
-
-    MDTopAppBar:
-        title: "MDTopAppBar"
-        left_action_items: [["menu", lambda x: app.callback(x)]]
-        right_action_items: [["dots-vertical", lambda x: app.callback(x)]]
-
-    MDLabel:
-        text: "Content"
-        halign: "center"
-'''
 
 
+if __name__ == '__main__':
+    LifeJackIt().run()
 

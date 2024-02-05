@@ -87,6 +87,7 @@ class MainScreen(Screen):
         # Open the Popup
         self.popup.open()
 
+
 class ClassListItem(OneLineAvatarIconListItem):
     pass
 
