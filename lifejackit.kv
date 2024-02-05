@@ -350,9 +350,6 @@
                                     theme_icon_color: "Custom"
                                     icon_color: "white"
 
-
-
-
             MDBottomNavigationItem:
                 name: 'sChool'
                 text: "School"
@@ -397,7 +394,7 @@
                                 padding: (2, 0, 2, 0)
                                 Label:
                                     text: "Frequently Asked Questions (FAQs)"
-                                    font_size: 23
+                                    font_size: "23dp"
                                     bold: True
                                     color: 0, 0, 0, 1
                                     text_size: self.width, None
@@ -424,7 +421,7 @@
                                 Label:
                                     id: a1
                                     text: "Appointments"
-                                    font_size: 23
+                                    font_size: "23dp"
                                     bold: True
                                     color: 0, 0, 0, 1
                                     text_size: self.width, None
@@ -450,12 +447,12 @@
                                     text: "Make a new appointment"
                                     md_bg_color: 8/255, 77/255, 204/255, 1
                                     size_hint_y: None
+                                    on_press:
+                                        root.make_appointment()
                                 Label:
                                     id: a3
                                     size_hint_y: None
                                     height: 20
-
-
 
             MDBottomNavigationItem:
                 name: 'settings'
@@ -486,16 +483,16 @@
     MDRelativeLayout:
         MDLabel:
             text: "Appointment with " + root.person
-            font_size: 20
+            font_size: "20dp"
             bold: True
             pos_hint: {"center_x": 0.5, "center_y": 0.9}
         MDLabel:
             text: "Date: " + root.date
-            font_size: 15
+            font_size: "15dp"
             pos_hint: {"center_x": 0.5, "center_y": 0.6}
         MDLabel:
             text: "Time: " + root.time
-            font_size: 15
+            font_size: "15dp"
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
         # Call button, chat button, delete button here.
         MDBoxLayout:
@@ -685,7 +682,7 @@
         MDRaisedButton:
             id: cancel
             text: "Cancel"
-            font_size: 24
+            font_size: "24dp"
             md_bg_color: 1, 51/255, 51/255, 1
             size_hint: 0.3, 0.35
             pos_hint: {"center_x": 0.25, "center_y": 0.5}
@@ -695,8 +692,119 @@
         MDRaisedButton:
             id: confirm
             text: "Confirm"
-            font_size: 24
+            font_size: "24dp"
             md_bg_color: 113/255, 201/255, 135/255, 1
             size_hint: 0.3, 0.35
             pos_hint: {"center_x": 0.75, "center_y": 0.5}
 
+
+<AppointmentPopup>
+    size_hint: 0.8, 0.7
+    halign: "center"
+    title: "Make an Appointment"
+    title_align: "center"
+    title_size: 17
+    title_color: 1, 1, 1, 1
+    background_normal: ""
+    background_color: 189/255, 1, 206/255, 1
+    FloatLayout:
+        MDLabel:
+            text: "Select a person"
+            pos_hint: {"center_x": 0.5, "center_y": 0.95}
+            halign: "center"
+            color: 1, 1, 1, 1
+        MDDropDownItem:
+            canvas.before:
+                Color:
+                    rgba: 1, 1, 1, 0.7
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [2]
+            id: person_dropdown
+            font_size: "19sp"
+            color: 1, 1, 1, 1
+            size_hint: 0.5, 0.09
+            pos_hint: {"center_x": 0.5, "center_y": 0.85}
+            on_release:
+                root.people_menu.open()
+        MDRaisedButton:
+            id: date_button
+            text: "Select a date"
+            pos_hint: {"center_x": 0.5, "center_y": 0.65}
+            md_bg_color: root.inactive_color
+            on_release:
+                root.show_date_picker()
+        MDLabel:
+            id: date_label
+            text: "No date selected."
+            pos_hint: {"center_x": 0.5, "center_y": 0.55}
+            halign: "center"
+            color: 1, 1, 1, 1
+        MDRaisedButton:
+            id: time_button
+            text: "Select a time"
+            pos_hint: {"center_x": 0.5, "center_y": 0.35}
+            md_bg_color: root.inactive_color
+            on_release:
+                root.show_time_selector()
+        MDLabel:
+            id: time_label
+            text: "No time selected."
+            halign: "center"
+            color: 1, 1, 1, 1
+            pos_hint: {"center_x": 0.5, "center_y": 0.25}
+        MDRaisedButton:
+            id: confirm
+            text: "Confirm"
+            font_size: "20dp"
+            md_bg_color: root.inactive_color
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.72, "center_y": 0.1}
+            on_press:
+                root.confirm_appointment()
+        MDRaisedButton:
+            id: cancel
+            text: "Cancel"
+            font_size: "20dp"
+            md_bg_color: 1, 51/255, 51/255, 1
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.28, "center_y": 0.1}
+            on_press:
+                root.dismiss()
+
+<TimePopup>
+    size_hint: 0.9, 0.65
+    halign: "center"
+    title: "Select a Time"
+    title_align: "center"
+    title_size: 17
+    title_color: 1, 1, 1, 1
+    background_normal: ""
+    background_color: 189/255, 1, 206/255, 1
+    FloatLayout:
+        MDRaisedButton:
+            id: confirm
+            text: "Confirm"
+            font_size: "20dp"
+            md_bg_color: root.inactive_color
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.72, "center_y": 0.12}
+            on_press:
+                root.on_save_button()
+        MDRaisedButton:
+            id: cancel
+            text: "Cancel"
+            font_size: "20dp"
+            md_bg_color: 1, 51/255, 51/255, 1
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.28, "center_y": 0.12}
+            on_press:
+                root.dismiss()
+        MDGridLayout:
+            id: time_grid
+            cols: 3
+            size_hint: 1, 0.7
+            pos_hint: {"center_x": 0.5, "center_y": 0.64}
+            padding: 20
+            spacing: 10
