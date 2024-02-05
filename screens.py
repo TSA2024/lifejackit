@@ -9,7 +9,6 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
-from kivy.uix.textinput import TextInput
 
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.card import MDCard
