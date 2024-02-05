@@ -106,6 +106,7 @@ class MainScreen(Screen):
             return
         self.appointments.remove(appointment)
         self.reset_appointments()
+        # TODO: Make time available again.
 
     def reset_appointments(self):
         self.keep = [self.ids.a1, self.ids.no_appointments, self.ids.a2, self.ids.make_appointment, self.ids.a3]
