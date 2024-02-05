@@ -37,6 +37,10 @@ class LifeJackIt(MDApp):
             self.sm.add_widget(MainScreen(name='main'))
             self.sm.add_widget(CreateAccountScreen(name='account'))
             self.sm.add_widget(LogInScreen(name='login'))
+            self.sm.add_widget(Course1Screen(name='c1'))
+            self.sm.add_widget(Course2Screen(name='c2'))
+            self.sm.add_widget(Course3Screen(name='c3'))
+            self.sm.add_widget(Course4Screen(name='c4'))
             sm = self.sm
         return Factory.MainScreen()
 

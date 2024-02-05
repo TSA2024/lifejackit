@@ -1,3 +1,4 @@
+import yaml
 from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.uix.widget import WidgetException
@@ -10,13 +11,20 @@ from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
 from kivymd.uix.card import MDCard
+from kivy.clock import Clock
+
+
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.textfield import MDTextField
 
 from data import faq, aspirations
-from database import query, update
+
+from data import faq, quotes
+
+from kivy.uix.textinput import TextInput
+
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -45,7 +53,7 @@ class MainScreen(Screen):
             a.add_widget(
                 Label(
                     text=faq[q],
-                    text_size=(self.width*3.4, None),
+                    text_size=(self.width * 3.4, None),
                     halign="left",
                     color=(0, 0, 0, 1),
                     height=height,
@@ -93,6 +101,28 @@ class MainScreen(Screen):
                 continue
         for i in range(2, len(self.keep)):
             self.ids.appointments.add_widget(self.keep[i])
+
+        self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(self.appointments) == 0 else ""
+
+        self.ids.quote_label.text = quotes[0] if quotes else "No quotes available"
+
+        # Schedule the function to update the quote every 30 seconds
+        Clock.schedule_interval(self.update_quote, 30)
+        Clock.schedule_interval(self.clear_text, 30)
+
+    def select(self, text_item):
+        self.menu.dismiss()
+        # Snackbar(text=text_item).open()
+        print(text_item)
+
+    def new_data_table_size(self):
+        new_values = (
+            ("", max(Window.width * 0.099, dp(55))),
+            ("", max(Window.width * 0.099, dp(55))),
+            ("", max(Window.width * 0.099, dp(55))),
+        )
+        return new_values
+
         self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(
             self.appointments) == 0 else "Your Appointments:"
 
@@ -120,11 +150,24 @@ class MainScreen(Screen):
         submit_button.bind(on_release=submit_button_pressed)
         layout.add_widget(submit_button)
 
+
         # Add content to the Popup
         self.popup.content = layout
 
         # Open the Popup
         self.popup.open()
+
+    def update_quote(self, dt):
+        # This function is called at regular intervals (every 30 seconds)
+        current_index = quotes.index(self.ids.quote_label.text)
+        next_index = (current_index + 1) % len(quotes)
+        self.ids.quote_label.text = quotes[next_index]
+
+    def clear_text(self, dt):
+        # Access the MDTextField with id "reflection" and clear its text
+        # This function is called at regular intervals (every 30 seconds)
+        reflection_textfield = self.ids.reflection
+        reflection_textfield.text = ""
 
 
 class ClassListItem(OneLineAvatarIconListItem):
