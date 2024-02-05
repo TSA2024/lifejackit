@@ -1,14 +1,7 @@
 from kivy.core.window import Window
 from kivy.metrics import dp
-from kivy.uix.screenmanager import Screen, ScreenManager
-from kivymd.uix.chip import MDChip
-from kivymd.uix.card import MDCard
-from kivy.uix.popup import Popup
-from kivymd.uix.list import OneLineAvatarIconListItem
-from kivymd.uix.textfield import MDTextField
 from kivy.uix.widget import WidgetException
 
-from kivy.uix.screenmanager import Screen
 from kivy.properties import StringProperty, NumericProperty
 from kivy.uix.accordion import AccordionItem
 from kivymd.uix.button import MDRaisedButton
@@ -103,24 +96,6 @@ class MainScreen(Screen):
         self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(
             self.appointments) == 0 else "Your Appointments:"
 
-    def select(self, text_item):
-        self.menu.dismiss()
-        # Snackbar(text=text_item).open()
-        print(text_item)
-
-    def new_data_table_size(self):
-        new_values = (
-            ("", max(Window.width * 0.099, dp(55))),
-            ("", max(Window.width * 0.099, dp(55))),
-            ("", max(Window.width * 0.099, dp(55))),
-        )
-        return new_values
-
-    def callback(self, button):
-        self.display_menu.caller = button
-        self.display_menu.open()
-
-
     def show_popup(self, title):
         # Create a Popup instance
         self.popup = Popup(title=title, size_hint=(.8, .5))
@@ -136,7 +111,6 @@ class MainScreen(Screen):
 
         # Define the function to be called when the button is pressed
         def submit_button_pressed(instance):
-            print(f"{title} entered:", self.text_input.text)
             aspirations[self.aspiration_popup_i] = self.text_input.text
             # Store the text input value
             self.popup.text_value = self.text_input.text
