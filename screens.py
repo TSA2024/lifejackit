@@ -14,9 +14,13 @@ from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.textfield import MDTextField
+from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.pickers import MDDatePicker, MDTimePicker
 
-from data import faq, aspirations
+from data import faq, aspirations, appointment_people
 from database import query, update
+
+from datetime import datetime, date
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -56,18 +60,22 @@ class MainScreen(Screen):
         # TODO: Put actual appointments later.
         self.add_appointment(
             AppointmentCard(
-                person="Dr. Le",
-                date="2/15/2024",
+                person="Dr. Orr",
+                date="02/15/2024",
                 time="12:00 PM"
             )
         )
         self.add_appointment(
             AppointmentCard(
-                person="Dr. Misra",
-                date="2/23/2024",
+                person="Dr. Haber",
+                date="02/23/2024",
                 time="11:00 AM"
             )
         )
+
+    def make_appointment(self):
+        # TODO:
+        AppointmentPopup(self).open()
 
     def add_appointment(self, appointment):
         if appointment in self.appointments:
@@ -236,3 +244,88 @@ class ConfirmationPopup(Popup):
             self.dismiss()
 
         self.ids.confirm.bind(on_press=on_press)
+
+
+class AppointmentPopup(Popup):
+    date = StringProperty()
+    time = StringProperty()
+    person = StringProperty()
+
+    inactive_color = (0.5, 0.5, 0.5, 1)
+    active_color = (82/255, 1, 82/255, 1)
+
+    def __init__(self, main_screen, **kwargs):
+        super().__init__(**kwargs)
+        self.main_screen = main_screen
+        self.date = ""
+        self.time = ""
+        self.person = ""
+        self.date_picker = None
+        self.time_picker = None
+
+        self.ids.date_button.md_bg_color = self.inactive_color
+        self.ids.time_button.md_bg_color = self.inactive_color
+        self.ids.confirm.md_bg_color = self.inactive_color
+
+        self.people_menu = MDDropdownMenu(
+            caller=self.ids.person_dropdown,
+            items=[
+                {
+                    "text": name,
+                    "viewclass": "OneLineListItem",
+                    "on_release": lambda x=name: self.set_appointment_person(x)
+                } for name in appointment_people
+            ],
+            width_mult=4,
+            max_height=dp(300)
+        )
+
+    def set_appointment_person(self, person):
+        self.person = person
+        self.people_menu.dismiss()
+        self.ids.person_dropdown.text = person
+        self.ids.date_button.md_bg_color = self.active_color
+
+    def show_date_picker(self):
+        if self.person == "":
+            return
+        # TODO: Minimum date stuff.
+        self.date_picker = MDDatePicker(
+            min_date=date.today(),
+            max_date=date(date.today().year + 4, 12, 31)
+        )
+        self.date_picker.bind(on_save=self.on_date_save)
+        Window.size = (Window.size[0]-1, Window.size[1])
+        Window.size = (Window.size[0]+1, Window.size[1])
+        self.date_picker.open()
+
+    def on_date_save(self, instance, value, date_range):
+        self.date = value.strftime("%m/%d/%Y")
+        self.ids.time_button.md_bg_color = self.active_color
+        self.ids.date_label.text = self.date
+        self.date_picker.dismiss()
+
+    def show_time_picker(self):
+        if self.date == "":
+            return
+        self.time_picker = MDTimePicker()
+        self.time_picker.bind(on_save=self.on_time_save)
+        self.time_picker.open()
+
+    def on_time_save(self, instance, value):
+        self.time = value.strftime("%I:%M %p")
+        self.ids.time_label.text = self.time
+        self.ids.confirm.md_bg_color = self.active_color
+        self.time_picker.dismiss()
+
+    def confirm_appointment(self):
+        if self.time == "":
+            return
+        self.main_screen.add_appointment(
+            AppointmentCard(
+                person=self.person,
+                date=self.date,
+                time=self.time
+            )
+        )
+        self.dismiss()
