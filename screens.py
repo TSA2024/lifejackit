@@ -2,8 +2,7 @@ from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.properties import NumericProperty
 from kivy.uix.accordion import AccordionItem
-from kivy.uix.button import Button
-from kivy.uix.gridlayout import GridLayout
+from kivymd.uix.button import MDRaisedButton
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
@@ -14,7 +13,7 @@ from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.textfield import MDTextField
 
-from data import faq
+from data import faq, aspirations
 from database import query, update
 
 
@@ -27,6 +26,7 @@ class StartingScreen(Screen):
 
 
 class MainScreen(Screen):
+    aspiration_popup_i = 0
 
     def callback(self, button):
         self.display_menu.caller = button
@@ -51,33 +51,27 @@ class MainScreen(Screen):
             self.ids.box.height += height
 
     def show_popup(self, title):
-        # Check if the popup already exists
-        if hasattr(self, 'popup'):
-            # If it exists, update the title
-            self.popup.title = title
-            # Set the text input text to the stored value
-            self.text_input.text = self.popup.text_value
-            # Open the popup
-            self.popup.open()
-            return
-
         # Create a Popup instance
-        self.popup = Popup(title=title, size_hint=(None, None), size=(400, 400))
+        self.popup = Popup(title=title, size_hint=(.8, .5))
 
         # Create content for the Popup
-        layout = GridLayout(cols=1)
-        layout.add_widget(Label(text=f'Write "{title}" in the box below'))
-        self.text_input = TextInput()
+        layout = MDFloatLayout()
+        layout.add_widget(Label(text=f'Write "{title}" in the box below', pos_hint={"center_x": 0.5, "center_y": 0.87}))
+        self.text_input = TextInput(size_hint=(1, .5), pos_hint={"center_x": 0.5, "center_y": 0.5})
         layout.add_widget(self.text_input)
+
+        self.aspiration_popup_i = int(title.split("#")[-1]) - 1
+        self.text_input.text = aspirations[self.aspiration_popup_i]
 
         # Define the function to be called when the button is pressed
         def submit_button_pressed(instance):
             print(f"{title} entered:", self.text_input.text)
+            aspirations[self.aspiration_popup_i] = self.text_input.text
             # Store the text input value
             self.popup.text_value = self.text_input.text
             self.popup.dismiss()
 
-        submit_button = Button(text='Submit')
+        submit_button = MDRaisedButton(text='Submit', size_hint=(.5, .18), md_bg_color=(113/255, 201/255, 135/255, 1), pos_hint={"center_x": 0.5, "center_y": 0.12})
         submit_button.bind(on_release=submit_button_pressed)
         layout.add_widget(submit_button)
 
