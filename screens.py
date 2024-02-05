@@ -20,7 +20,22 @@ from kivymd.uix.pickers import MDDatePicker, MDTimePicker
 from data import faq, aspirations, appointment_people
 from database import query, update
 
-from datetime import datetime, date
+from datetime import date
+
+
+times = [
+    "08:00 AM",
+    "09:00 AM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
+    "04:00 PM",
+    "05:00 PM",
+    "07:00 PM",
+    "08:00 PM",
+    "09:00 PM",
+    "10:00 PM",
+]
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -33,7 +48,7 @@ class StartingScreen(Screen):
 
 class MainScreen(Screen):
     aspiration_popup_i = 0
-    appointments = set()
+    appointments = []
     keep = []
     confirmation_popup = None
 
@@ -80,7 +95,10 @@ class MainScreen(Screen):
     def add_appointment(self, appointment):
         if appointment in self.appointments:
             return
-        self.appointments.add(appointment)
+        self.appointments.append(appointment)
+        self.appointments = sorted(self.appointments, key=lambda x: (x.date[-4:], x.date, x.time[-2:], x.time))
+        if appointment.time in times:
+            times.remove(appointment.time)
         self.reset_appointments()
 
     def delete_appointment(self, appointment):
@@ -306,17 +324,30 @@ class AppointmentPopup(Popup):
         self.date_picker.dismiss()
 
     def show_time_picker(self):
+        # Don't use anymore.
         if self.date == "":
             return
         self.time_picker = MDTimePicker()
         self.time_picker.bind(on_save=self.on_time_save)
         self.time_picker.open()
 
+    def show_time_selector(self):
+        if self.date == "":
+            return
+        self.time_picker = TimePopup(times=times, on_save=self.on_time_save_selector)
+        self.time_picker.open()
+
     def on_time_save(self, instance, value):
+        # Don't use anymore.
         self.time = value.strftime("%I:%M %p")
         self.ids.time_label.text = self.time
         self.ids.confirm.md_bg_color = self.active_color
         self.time_picker.dismiss()
+
+    def on_time_save_selector(self, instance, value):
+        self.time = value
+        self.ids.time_label.text = self.time
+        self.ids.confirm.md_bg_color = self.active_color
 
     def confirm_appointment(self):
         if self.time == "":
@@ -328,4 +359,33 @@ class AppointmentPopup(Popup):
                 time=self.time
             )
         )
+        self.dismiss()
+
+
+class TimePopup(Popup):
+    on_save = None
+    default_color = (82/255, 148/255, 1, 1)
+    inactive_color = (0.5, 0.5, 0.5, 1)
+    active_color = (82/255, 1, 82/255, 1)
+
+    def __init__(self, times, on_save, **kwargs):
+        super().__init__(**kwargs)
+        self.on_save = on_save
+        self.selected = None
+
+        for time in times:
+            self.ids.time_grid.add_widget(MDRaisedButton(text=time, on_release=self.on_time_button, md_bg_color=self.default_color))
+
+    def on_time_button(self, instance):
+        if self.selected is not None:
+            self.selected.md_bg_color = self.default_color
+        else:
+            self.ids.confirm.md_bg_color = self.active_color
+        instance.md_bg_color = self.active_color
+        self.selected = instance
+
+    def on_save_button(self):
+        if self.selected is None:
+            return
+        self.on_save(self, self.selected.text)
         self.dismiss()
