@@ -1,28 +1,30 @@
 import yaml
 from kivy.core.window import Window
 from kivy.metrics import dp
-from kivy.properties import NumericProperty
-from kivy.uix.screenmanager import Screen, ScreenManager
-from kivymd.uix.chip import MDChip
-from kivymd.uix.card import MDCard
-from kivy.uix.popup import Popup
-from kivymd.uix.list import OneLineAvatarIconListItem
-from kivymd.uix.textfield import MDTextField
+from kivy.uix.widget import WidgetException
 
-from kivy.uix.screenmanager import Screen
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, NumericProperty
 from kivy.uix.accordion import AccordionItem
+from kivymd.uix.button import MDRaisedButton
 from kivy.uix.label import Label
+from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import Screen
+from kivy.uix.textinput import TextInput
 from kivymd.uix.card import MDCard
 from kivy.clock import Clock
 
-from kivymd.uix.floatlayout import MDFloatLayout
-from kivymd.uix.tab import MDTabsBase
 
-from database import query, update
+from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.list import OneLineAvatarIconListItem
+from kivymd.uix.tab import MDTabsBase
+from kivymd.uix.textfield import MDTextField
+
+from data import faq, aspirations
+
 from data import faq, quotes
 
 from kivy.uix.textinput import TextInput
+
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -34,9 +36,10 @@ class StartingScreen(Screen):
 
 
 class MainScreen(Screen):
-    appointments = []
+    aspiration_popup_i = 0
+    appointments = set()
     keep = []
-    a = False
+    confirmation_popup = None
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -59,28 +62,46 @@ class MainScreen(Screen):
             self.ids.box.height += height
         # Appointments stuff.
         # TODO: Put actual appointments later.
-
-        self.appointments = [
+        self.add_appointment(
             AppointmentCard(
                 person="Dr. Le",
                 date="2/15/2024",
                 time="12:00 PM"
-            ),
+            )
+        )
+        self.add_appointment(
             AppointmentCard(
                 person="Dr. Misra",
                 date="2/23/2024",
                 time="11:00 AM"
-            ),
-        ]
-        # TODO: FIX AGAIN
+            )
+        )
+
+    def add_appointment(self, appointment):
+        if appointment in self.appointments:
+            return
+        self.appointments.add(appointment)
+        self.reset_appointments()
+
+    def delete_appointment(self, appointment):
+        if appointment not in self.appointments:
+            return
+        self.appointments.remove(appointment)
+        self.reset_appointments()
+
+    def reset_appointments(self):
         self.keep = [self.ids.a1, self.ids.no_appointments, self.ids.a2, self.ids.make_appointment, self.ids.a3]
         self.ids.appointments.clear_widgets()
         self.ids.appointments.add_widget(self.keep[0])
         self.ids.appointments.add_widget(self.keep[1])
         for appointment in self.appointments:
-            self.ids.appointments.add_widget(appointment)
+            try:
+                self.ids.appointments.add_widget(appointment)
+            except WidgetException:
+                continue
         for i in range(2, len(self.keep)):
             self.ids.appointments.add_widget(self.keep[i])
+
         self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(self.appointments) == 0 else ""
 
         self.ids.quote_label.text = quotes[0] if quotes else "No quotes available"
@@ -102,9 +123,39 @@ class MainScreen(Screen):
         )
         return new_values
 
-    def callback(self, button):
-        self.display_menu.caller = button
-        self.display_menu.open()
+        self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(
+            self.appointments) == 0 else "Your Appointments:"
+
+    def show_popup(self, title):
+        # Create a Popup instance
+        self.popup = Popup(title=title, size_hint=(.8, .5))
+
+        # Create content for the Popup
+        layout = MDFloatLayout()
+        layout.add_widget(Label(text=f'Write "{title}" in the box below', pos_hint={"center_x": 0.5, "center_y": 0.87}))
+        self.text_input = TextInput(size_hint=(1, .5), pos_hint={"center_x": 0.5, "center_y": 0.5})
+        layout.add_widget(self.text_input)
+
+        self.aspiration_popup_i = int(title.split("#")[-1]) - 1
+        self.text_input.text = aspirations[self.aspiration_popup_i]
+
+        # Define the function to be called when the button is pressed
+        def submit_button_pressed(instance):
+            aspirations[self.aspiration_popup_i] = self.text_input.text
+            # Store the text input value
+            self.popup.text_value = self.text_input.text
+            self.popup.dismiss()
+
+        submit_button = MDRaisedButton(text='Submit', size_hint=(.5, .18), md_bg_color=(113/255, 201/255, 135/255, 1), pos_hint={"center_x": 0.5, "center_y": 0.12})
+        submit_button.bind(on_release=submit_button_pressed)
+        layout.add_widget(submit_button)
+
+
+        # Add content to the Popup
+        self.popup.content = layout
+
+        # Open the Popup
+        self.popup.open()
 
     def update_quote(self, dt):
         # This function is called at regular intervals (every 30 seconds)
@@ -125,10 +176,6 @@ class ClassListItem(OneLineAvatarIconListItem):
 
 class GradeCarousel(MDCard):
     program_number = NumericProperty(0)
-
-
-class HealthCarousel(MDCard):
-    question_number = NumericProperty(0)
 
 
 class CourseField(MDTextField):
@@ -210,3 +257,25 @@ class AppointmentCard(MDCard):
     person = StringProperty()
     date = StringProperty()
     time = StringProperty()
+
+    def open_confirmation(self, question):
+        self.confirmation_popup = ConfirmationPopup(question=question, on_confirm=lambda: (self.delete_appointment()))
+        self.confirmation_popup.open()
+
+    def delete_appointment(self):
+        self.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent.parent.delete_appointment(self)
+
+
+class ConfirmationPopup(Popup):
+    question = StringProperty()
+
+    def __init__(self, question, on_confirm, **kwargs):
+        super().__init__(**kwargs)
+        self.question = question
+        self.on_confirm = on_confirm
+
+        def on_press(_):
+            on_confirm()
+            self.dismiss()
+
+        self.ids.confirm.bind(on_press=on_press)
