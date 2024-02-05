@@ -30,20 +30,6 @@ class StartingScreen(Screen):
 
 
 class MainScreen(Screen):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-        self.display_menu = MDDropdownMenu(
-            items=[
-                {
-                    "text": option,
-                    "on_release": lambda x=option: self.select(x)
-                } for option in ("Item 1", "Item 2", "Item 3")
-            ],
-            width_mult=3,
-            max_height=dp(150),
-        )
-
     def select(self, text_item):
         self.menu.dismiss()
         # Snackbar(text=text_item).open()
