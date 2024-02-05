@@ -1,27 +1,22 @@
 from kivy.core.window import Window
 from kivy.metrics import dp
-from kivy.uix.screenmanager import Screen, ScreenManager
-from kivymd.uix.chip import MDChip
-from kivymd.uix.card import MDCard
-from kivy.uix.popup import Popup
-from kivymd.uix.list import OneLineAvatarIconListItem
-from kivymd.uix.textfield import MDTextField
 from kivy.uix.widget import WidgetException
 
-from kivy.uix.screenmanager import Screen
 from kivy.properties import StringProperty, NumericProperty
 from kivy.uix.accordion import AccordionItem
+from kivymd.uix.button import MDRaisedButton
 from kivy.uix.label import Label
-from kivymd.uix.card import MDCard
 from kivy.uix.popup import Popup
-
-from kivymd.uix.floatlayout import MDFloatLayout
-from kivymd.uix.tab import MDTabsBase
-
-from database import query, update
-from data import faq
-
+from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
+from kivymd.uix.card import MDCard
+from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.list import OneLineAvatarIconListItem
+from kivymd.uix.tab import MDTabsBase
+from kivymd.uix.textfield import MDTextField
+
+from data import faq, aspirations
+from database import query, update
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -33,6 +28,7 @@ class StartingScreen(Screen):
 
 
 class MainScreen(Screen):
+    aspiration_popup_i = 0
     appointments = set()
     keep = []
     confirmation_popup = None
@@ -100,22 +96,35 @@ class MainScreen(Screen):
         self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(
             self.appointments) == 0 else "Your Appointments:"
 
-    def select(self, text_item):
-        self.menu.dismiss()
-        # Snackbar(text=text_item).open()
-        print(text_item)
+    def show_popup(self, title):
+        # Create a Popup instance
+        self.popup = Popup(title=title, size_hint=(.8, .5))
 
-    def new_data_table_size(self):
-        new_values = (
-            ("", max(Window.width * 0.099, dp(55))),
-            ("", max(Window.width * 0.099, dp(55))),
-            ("", max(Window.width * 0.099, dp(55))),
-        )
-        return new_values
+        # Create content for the Popup
+        layout = MDFloatLayout()
+        layout.add_widget(Label(text=f'Write "{title}" in the box below', pos_hint={"center_x": 0.5, "center_y": 0.87}))
+        self.text_input = TextInput(size_hint=(1, .5), pos_hint={"center_x": 0.5, "center_y": 0.5})
+        layout.add_widget(self.text_input)
 
-    def callback(self, button):
-        self.display_menu.caller = button
-        self.display_menu.open()
+        self.aspiration_popup_i = int(title.split("#")[-1]) - 1
+        self.text_input.text = aspirations[self.aspiration_popup_i]
+
+        # Define the function to be called when the button is pressed
+        def submit_button_pressed(instance):
+            aspirations[self.aspiration_popup_i] = self.text_input.text
+            # Store the text input value
+            self.popup.text_value = self.text_input.text
+            self.popup.dismiss()
+
+        submit_button = MDRaisedButton(text='Submit', size_hint=(.5, .18), md_bg_color=(113/255, 201/255, 135/255, 1), pos_hint={"center_x": 0.5, "center_y": 0.12})
+        submit_button.bind(on_release=submit_button_pressed)
+        layout.add_widget(submit_button)
+
+        # Add content to the Popup
+        self.popup.content = layout
+
+        # Open the Popup
+        self.popup.open()
 
 
 class ClassListItem(OneLineAvatarIconListItem):
