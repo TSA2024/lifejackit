@@ -91,6 +91,12 @@ class MainScreen(Screen):
             )
         )
 
+        self.ids.quote_label.text = quotes[0] if quotes else "No quotes available"
+
+        # Schedule the function to update the quote every 30 seconds
+        Clock.schedule_interval(self.update_quote, 30)
+        Clock.schedule_interval(self.clear_text, 30)
+
     def make_appointment(self):
         # TODO:
         AppointmentPopup(self).open()
@@ -124,29 +130,7 @@ class MainScreen(Screen):
         for i in range(2, len(self.keep)):
             self.ids.appointments.add_widget(self.keep[i])
 
-        self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(self.appointments) == 0 else ""
-
-        self.ids.quote_label.text = quotes[0] if quotes else "No quotes available"
-
-        # Schedule the function to update the quote every 30 seconds
-        Clock.schedule_interval(self.update_quote, 30)
-        Clock.schedule_interval(self.clear_text, 30)
-
-    def select(self, text_item):
-        self.menu.dismiss()
-        # Snackbar(text=text_item).open()
-        print(text_item)
-
-    def new_data_table_size(self):
-        new_values = (
-            ("", max(Window.width * 0.099, dp(55))),
-            ("", max(Window.width * 0.099, dp(55))),
-            ("", max(Window.width * 0.099, dp(55))),
-        )
-        return new_values
-
-        self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(
-            self.appointments) == 0 else "Your Appointments:"
+        self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(self.appointments) == 0 else "Your appointments:"
 
     def show_popup(self, title):
         # Create a Popup instance
