@@ -15,7 +15,7 @@ from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.menu import MDDropdownMenu
-from kivymd.uix.pickers import MDDatePicker, MDTimePicker
+from kivymd.uix.pickers import MDDatePicker
 
 from data import faq, aspirations, appointment_people
 from database import query, update
@@ -322,14 +322,6 @@ class AppointmentPopup(Popup):
         self.ids.time_button.md_bg_color = self.active_color
         self.ids.date_label.text = self.date
         self.date_picker.dismiss()
-
-    def show_time_picker(self):
-        # Don't use anymore.
-        if self.date == "":
-            return
-        self.time_picker = MDTimePicker()
-        self.time_picker.bind(on_save=self.on_time_save)
-        self.time_picker.open()
 
     def show_time_selector(self):
         if self.date == "":
