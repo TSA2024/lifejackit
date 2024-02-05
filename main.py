@@ -24,35 +24,9 @@ class LifeJackIt(MDApp):
         self.sm.add_widget(Course3Screen(name='c3'))
         self.sm.add_widget(Course4Screen(name='c4'))
         return self.sm
-
-    class LifeJackIt(MDApp):
-        def show_popup(self, title):
-            # Create a Popup instance
-            popup = Popup(title=title, size_hint=(None, None), size=(400, 400))
-
-            # Create content for the Popup
-            layout = GridLayout(cols=1)
-            layout.add_widget(Label(text=f'Write "{title}" in the box below'))
-            text_input = TextInput()
-            layout.add_widget(text_input)
-
-            # Define the function to be called when the button is pressed
-            def submit_button_pressed(instance):
-                print(f"{title} entered:", text_input.text)
-                popup.dismiss()
-
-            submit_button = Button(text='Submit')
-            submit_button.bind(on_release=submit_button_pressed)
-            layout.add_widget(submit_button)
-
-            # Add content to the Popup
-            popup.content = layout
-
-            # Open the Popup
-            popup.open()
-
-if __name__ == '__main__':
-    LifeJackIt().run()
+class LifeJackIt(MDApp):
+    if __name__ == '__main__':
+        LifeJackIt().run()
 
 KV = '''
 MDBoxLayout:

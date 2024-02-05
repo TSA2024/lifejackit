@@ -1,24 +1,21 @@
 from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.properties import NumericProperty
-from kivy.uix.screenmanager import Screen, ScreenManager
-from kivymd.uix.chip import MDChip
-from kivymd.uix.card import MDCard
+from kivy.uix.accordion import AccordionItem
+from kivy.uix.button import Button
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from kivy.uix.screenmanager import Screen
+from kivy.uix.textinput import TextInput
+from kivymd.uix.card import MDCard
+from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.list import OneLineAvatarIconListItem
+from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.textfield import MDTextField
 
-from kivy.uix.screenmanager import Screen
-from kivy.uix.accordion import AccordionItem
-from kivy.uix.label import Label
-
-from kivymd.uix.floatlayout import MDFloatLayout
-from kivymd.uix.tab import MDTabsBase
-
-from database import query, update
 from data import faq
-
-from kivy.uix.textinput import TextInput
+from database import query, update
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -30,18 +27,6 @@ class StartingScreen(Screen):
 
 
 class MainScreen(Screen):
-    def select(self, text_item):
-        self.menu.dismiss()
-        # Snackbar(text=text_item).open()
-        print(text_item)
-
-    def new_data_table_size(self):
-        new_values = (
-            ("", max(Window.width * 0.099, dp(55))),
-            ("", max(Window.width * 0.099, dp(55))),
-            ("", max(Window.width * 0.099, dp(55))),
-        )
-        return new_values
 
     def callback(self, button):
         self.display_menu.caller = button
@@ -64,6 +49,43 @@ class MainScreen(Screen):
                 )
             )
             self.ids.box.height += height
+
+    def show_popup(self, title):
+        # Check if the popup already exists
+        if hasattr(self, 'popup'):
+            # If it exists, update the title
+            self.popup.title = title
+            # Set the text input text to the stored value
+            self.text_input.text = self.popup.text_value
+            # Open the popup
+            self.popup.open()
+            return
+
+        # Create a Popup instance
+        self.popup = Popup(title=title, size_hint=(None, None), size=(400, 400))
+
+        # Create content for the Popup
+        layout = GridLayout(cols=1)
+        layout.add_widget(Label(text=f'Write "{title}" in the box below'))
+        self.text_input = TextInput()
+        layout.add_widget(self.text_input)
+
+        # Define the function to be called when the button is pressed
+        def submit_button_pressed(instance):
+            print(f"{title} entered:", self.text_input.text)
+            # Store the text input value
+            self.popup.text_value = self.text_input.text
+            self.popup.dismiss()
+
+        submit_button = Button(text='Submit')
+        submit_button.bind(on_release=submit_button_pressed)
+        layout.add_widget(submit_button)
+
+        # Add content to the Popup
+        self.popup.content = layout
+
+        # Open the Popup
+        self.popup.open()
 
 class ClassListItem(OneLineAvatarIconListItem):
     pass
