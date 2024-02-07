@@ -1,4 +1,6 @@
 from os import getcwd, path
+
+from kivy.core.window import Window
 from kivy.factory import Factory
 
 from screens import *

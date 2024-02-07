@@ -217,6 +217,14 @@
                         Tab:
                             icon: "dumbbell"
                             FloatLayout:
+                                canvas.before:
+                                    Color:
+                                        rgba: 1, 1, 1, 1
+                                    Rectangle:
+                                        source: "BMI table.png"
+                                        size: 0.4 * self.width, 0.4 * self.height
+                                        pos: self.pos
+
                                 MDCard:
                                     opacity: 0.65
                                     padding: 4
@@ -230,6 +238,7 @@
                                         markup: True
                                         halign: "center"
                                         valign: "middle"
+
                         Tab:
                             icon: "star-shooting"
                             FloatLayout:
@@ -253,6 +262,7 @@
                                         markup: True
                                         halign: "center"
                                         valign: "middle"
+
                                 MDIconButton:
                                     icon: "star"
                                     pos_hint: {"center_x": 0.1, "center_y": 0.75}

@@ -1,14 +1,12 @@
-from kivy.core.window import Window
 from kivy.metrics import dp
-from kivy.uix.widget import WidgetException
-
 from kivy.properties import StringProperty, NumericProperty
 from kivy.uix.accordion import AccordionItem
-from kivymd.uix.button import MDRaisedButton
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
+from kivy.uix.widget import WidgetException
+from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.card import MDCard
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.list import OneLineAvatarIconListItem
