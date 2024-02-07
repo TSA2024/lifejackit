@@ -166,6 +166,75 @@
                 on_release:
                     app.root.current = "starting"
 
+<BMICalculatorScreen>
+    FloatLayout:
+        canvas.before:
+            Color:
+                rgba: 0/255, 51/255, 102/255, 1
+            Rectangle:
+                source: "fitness2-transformed.png"
+                pos: self.pos
+                size: self.size
+    MDCard:
+        opacity: 0.77
+        padding: 4
+        size_hint: None, None
+        size: "350dp", "500dp"
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
+
+
+        MDRelativeLayout:
+            MDLabel:
+                id: label
+                text: "BMI Calculator"
+                adaptive_size: True
+                color: "black"
+                pos_hint: {"center_x": 0.5, "center_y": 0.95}
+                font_size: '25sp'
+                bold: True
+            MDTextField:
+                id: height
+                hint_text: "Height (in inches)"
+                hint_text_size: "5sp"
+                mode: "rectangle"
+                width: 250
+                height: 10
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5, "center_y": 0.8}
+                line_color_normal: 0/255, 0/255, 0/255, 1
+                multiline: False
+                font_size:"15dp"
+                max_text_length: 5
+            MDTextField:
+                id: weight
+                hint_text: "Weight (in lbs.)"
+                hint_text_size: "5sp"
+                password: True
+                mode: "rectangle"
+                width: 250
+                height: 10
+                size_hint: None, None
+                pos_hint: {"center_x": 0.5, "center_y": 0.6}
+                line_color_normal: 0/255, 0/255, 0/255, 1
+                multiline: False
+                font_size:"15dp"
+                max_text_length: 5
+            MDRaisedButton:
+                id: calculate_button
+                text: "Calculate"
+                pos_hint: {"center_x": 0.5, "center_y": 0.45}
+                on_release:
+                    root.calculate_bmi()
+            MDLabel:
+                id: bmi_label
+                text: ""
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                font_size: "20sp"
+            MDIconButton:
+                icon: "arrow-left"
+                pos_hint: {"center_x": .1, "center_y": 0.05}
+                on_release:
+                    app.root.current = "main"
 
 <MainScreen>
     MDBoxLayout:
@@ -248,25 +317,43 @@
                             FloatLayout:
                                 canvas.before:
                                     Color:
-                                        rgba: 1, 1, 1, 1
+                                        rgba: 232/255, 203/255, 146/255, 1
                                     Rectangle:
-                                        source: "BMI table.png"
-                                        size: 0.4 * self.width, 0.4 * self.height
+                                        source: "fitness1.png"
                                         pos: self.pos
+                                        size: self.size
+                            FloatLayout:
+                                size_hint: None, None
+                                size: 0.7 * root.width, 0.55 * root.height
+                                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                                canvas:
+                                    Color:
+                                        rgba: 1, 1, 1, 0.8
+                                    Rectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                        source: "BMI table.png"
 
-                                MDCard:
-                                    opacity: 0.65
-                                    padding: 4
-                                    size_hint: None, None
-                                    size: "200dp", "50dp"
-                                    pos_hint: {"center_x": 0.5, "center_y": 0.925}
-                                    MDLabel:
-                                        pos_hint: {"center_x": 0.6, "center_y": 0.55}
-                                        font_size: 15
-                                        text: "[b]Nutrition and Exercise[/b]"
-                                        markup: True
-                                        halign: "center"
-                                        valign: "middle"
+                            MDRaisedButton:
+                                text: "BMI Calculator"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.075}
+                                on_release: app.root.current = "BMI"
+
+                            MDCard:
+                                opacity: 0.65
+                                padding: 4
+                                size_hint: None, None
+                                size: "200dp", "50dp"
+                                pos_hint: {"center_x": 0.5, "center_y": 0.925}
+                                MDLabel:
+                                    pos_hint: {"center_x": 0.6, "center_y": 0.55}
+                                    font_size: 15
+                                    text: "[b]Physical Health[/b]"
+                                    markup: True
+                                    halign: "center"
+                                    valign: "middle"
+
+
 
                         Tab:
                             icon: "star-shooting"

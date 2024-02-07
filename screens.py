@@ -44,7 +44,6 @@ class Tab(MDFloatLayout, MDTabsBase):
 class StartingScreen(Screen):
     pass
 
-
 class MainScreen(Screen):
     aspiration_popup_i = 0
     appointments = []
@@ -198,7 +197,12 @@ class Course3Screen(Screen):
 class Course4Screen(Screen):
     pass
 
-
+class BMICalculatorScreen(Screen):
+    def calculate_bmi(self):
+        height = float(self.ids.height.text)
+        weight = float(self.ids.weight.text)
+        bmi = (weight / (height ** 2)) * 730
+        self.ids.bmi_label.text = f"Your BMI is: {bmi:.2f}"
 class CreateAccountScreen(Screen):
     box_is_filled = False
 
@@ -399,3 +403,5 @@ class TimePopup(Popup):
             return
         self.on_save(self, self.selected.text)
         self.dismiss()
+
+
