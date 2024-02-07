@@ -1,20 +1,40 @@
+from kivy.core.window import Window
 from kivy.metrics import dp
 from kivy.properties import StringProperty, NumericProperty
+from kivy.clock import Clock
+
+from kivy.uix.widget import WidgetException
 from kivy.uix.accordion import AccordionItem
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
-from kivy.uix.widget import WidgetException
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.card import MDCard
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.list import OneLineAvatarIconListItem
 from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.textfield import MDTextField
-
-from data import faq, aspirations
+from kivymd.uix.menu import MDDropdownMenu
+from kivymd.uix.pickers import MDDatePicker
+from data import faq, quotes, aspirations, appointment_people
 from database import query, update
+from datetime import date
+
+
+times = [
+    "08:00 AM",
+    "09:00 AM",
+    "01:00 PM",
+    "02:00 PM",
+    "03:00 PM",
+    "04:00 PM",
+    "05:00 PM",
+    "07:00 PM",
+    "08:00 PM",
+    "09:00 PM",
+    "10:00 PM",
+]
 
 
 class Tab(MDFloatLayout, MDTabsBase):
@@ -27,7 +47,7 @@ class StartingScreen(Screen):
 
 class MainScreen(Screen):
     aspiration_popup_i = 0
-    appointments = set()
+    appointments = []
     keep = []
     confirmation_popup = None
 
@@ -43,7 +63,7 @@ class MainScreen(Screen):
             a.add_widget(
                 Label(
                     text=faq[q],
-                    text_size=(self.width*3.4, None),
+                    text_size=(self.width * 3.4, None),
                     halign="left",
                     color=(0, 0, 0, 1),
                     height=height,
@@ -54,23 +74,36 @@ class MainScreen(Screen):
         # TODO: Put actual appointments later.
         self.add_appointment(
             AppointmentCard(
-                person="Dr. Le",
-                date="2/15/2024",
+                person="Dr. Orr",
+                date="02/15/2024",
                 time="12:00 PM"
             )
         )
         self.add_appointment(
             AppointmentCard(
-                person="Dr. Misra",
-                date="2/23/2024",
+                person="Dr. Haber",
+                date="02/23/2024",
                 time="11:00 AM"
             )
         )
 
+        self.ids.quote_label.text = quotes[0] if quotes else "No quotes available"
+
+        # Schedule the function to update the quote every 30 seconds
+        Clock.schedule_interval(self.update_quote, 30)
+        Clock.schedule_interval(self.clear_text, 30)
+
+    def make_appointment(self):
+        # TODO:
+        AppointmentPopup(self).open()
+
     def add_appointment(self, appointment):
         if appointment in self.appointments:
             return
-        self.appointments.add(appointment)
+        self.appointments.append(appointment)
+        self.appointments = sorted(self.appointments, key=lambda x: (x.date[-4:], x.date, x.time[-2:], x.time))
+        if appointment.time in times:
+            times.remove(appointment.time)
         self.reset_appointments()
 
     def delete_appointment(self, appointment):
@@ -78,6 +111,7 @@ class MainScreen(Screen):
             return
         self.appointments.remove(appointment)
         self.reset_appointments()
+        # TODO: Make time available again.
 
     def reset_appointments(self):
         self.keep = [self.ids.a1, self.ids.no_appointments, self.ids.a2, self.ids.make_appointment, self.ids.a3]
@@ -91,8 +125,8 @@ class MainScreen(Screen):
                 continue
         for i in range(2, len(self.keep)):
             self.ids.appointments.add_widget(self.keep[i])
-        self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(
-            self.appointments) == 0 else "Your Appointments:"
+
+        self.ids.no_appointments.text = "[i]No appointments yet.[/i]" if len(self.appointments) == 0 else "Your appointments:"
 
     def show_popup(self, title):
         # Create a Popup instance
@@ -123,6 +157,18 @@ class MainScreen(Screen):
 
         # Open the Popup
         self.popup.open()
+
+    def update_quote(self, dt):
+        # This function is called at regular intervals (every 30 seconds)
+        current_index = quotes.index(self.ids.quote_label.text)
+        next_index = (current_index + 1) % len(quotes)
+        self.ids.quote_label.text = quotes[next_index]
+
+    def clear_text(self, dt):
+        # Access the MDTextField with id "reflection" and clear its text
+        # This function is called at regular intervals (every 30 seconds)
+        reflection_textfield = self.ids.reflection
+        reflection_textfield.text = ""
 
 
 class ClassListItem(OneLineAvatarIconListItem):
@@ -234,3 +280,122 @@ class ConfirmationPopup(Popup):
             self.dismiss()
 
         self.ids.confirm.bind(on_press=on_press)
+
+
+class AppointmentPopup(Popup):
+    date = StringProperty()
+    time = StringProperty()
+    person = StringProperty()
+
+    inactive_color = (0.5, 0.5, 0.5, 1)
+    active_color = (82/255, 1, 82/255, 1)
+
+    def __init__(self, main_screen, **kwargs):
+        super().__init__(**kwargs)
+        self.main_screen = main_screen
+        self.date = ""
+        self.time = ""
+        self.person = ""
+        self.date_picker = None
+        self.time_picker = None
+
+        self.ids.date_button.md_bg_color = self.inactive_color
+        self.ids.time_button.md_bg_color = self.inactive_color
+        self.ids.confirm.md_bg_color = self.inactive_color
+
+        self.people_menu = MDDropdownMenu(
+            caller=self.ids.person_dropdown,
+            items=[
+                {
+                    "text": name,
+                    "viewclass": "OneLineListItem",
+                    "on_release": lambda x=name: self.set_appointment_person(x)
+                } for name in appointment_people
+            ],
+            width_mult=4,
+            max_height=dp(300)
+        )
+
+    def set_appointment_person(self, person):
+        self.person = person
+        self.people_menu.dismiss()
+        self.ids.person_dropdown.text = person
+        self.ids.date_button.md_bg_color = self.active_color
+
+    def show_date_picker(self):
+        if self.person == "":
+            return
+        # TODO: Minimum date stuff.
+        self.date_picker = MDDatePicker(
+            min_date=date.today(),
+            max_date=date(date.today().year + 4, 12, 31)
+        )
+        self.date_picker.bind(on_save=self.on_date_save)
+        Window.size = (399, 600)
+        Window.size = (400, 600)
+        self.date_picker.open()
+
+    def on_date_save(self, instance, value, date_range):
+        self.date = value.strftime("%m/%d/%Y")
+        self.ids.time_button.md_bg_color = self.active_color
+        self.ids.date_label.text = self.date
+        self.date_picker.dismiss()
+
+    def show_time_selector(self):
+        if self.date == "":
+            return
+        self.time_picker = TimePopup(times=times, on_save=self.on_time_save_selector)
+        self.time_picker.open()
+
+    def on_time_save(self, instance, value):
+        # Don't use anymore.
+        self.time = value.strftime("%I:%M %p")
+        self.ids.time_label.text = self.time
+        self.ids.confirm.md_bg_color = self.active_color
+        self.time_picker.dismiss()
+
+    def on_time_save_selector(self, instance, value):
+        self.time = value
+        self.ids.time_label.text = self.time
+        self.ids.confirm.md_bg_color = self.active_color
+
+    def confirm_appointment(self):
+        if self.time == "":
+            return
+        self.main_screen.add_appointment(
+            AppointmentCard(
+                person=self.person,
+                date=self.date,
+                time=self.time
+            )
+        )
+        self.dismiss()
+
+
+class TimePopup(Popup):
+    on_save = None
+    default_color = (82/255, 148/255, 1, 1)
+    inactive_color = (0.5, 0.5, 0.5, 1)
+    active_color = (82/255, 1, 82/255, 1)
+
+    def __init__(self, times, on_save, **kwargs):
+        super().__init__(**kwargs)
+        self.on_save = on_save
+        self.selected = None
+
+        for time in times:
+            self.ids.time_grid.add_widget(MDRaisedButton(text=time, on_release=self.on_time_button, md_bg_color=self.default_color))
+
+    def on_time_button(self, instance):
+        if self.selected is not None:
+            self.selected.md_bg_color = self.default_color
+        else:
+            self.ids.confirm.md_bg_color = self.active_color
+        instance.md_bg_color = self.active_color
+        self.selected = instance
+
+    def on_save_button(self):
+        if self.selected is None:
+            return
+        self.on_save(self, self.selected.text)
+        self.dismiss()
