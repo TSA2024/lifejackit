@@ -335,8 +335,8 @@ class AppointmentPopup(Popup):
             max_date=date(date.today().year + 4, 12, 31)
         )
         self.date_picker.bind(on_save=self.on_date_save)
-        Window.size = (Window.size[0]-1, Window.size[1])
-        Window.size = (Window.size[0]+1, Window.size[1])
+        Window.size = (399, 600)
+        Window.size = (400, 600)
         self.date_picker.open()
 
     def on_date_save(self, instance, value, date_range):
