@@ -44,6 +44,7 @@ class Tab(MDFloatLayout, MDTabsBase):
 class StartingScreen(Screen):
     pass
 
+
 class MainScreen(Screen):
     aspiration_popup_i = 0
     appointments = []
@@ -169,6 +170,12 @@ class MainScreen(Screen):
         reflection_textfield = self.ids.reflection
         reflection_textfield.text = ""
 
+    def logout(self):
+        def on_confirm():
+            self.manager.current = "starting"
+
+        ConfirmationPopup(question="Are you sure you want to log out?", on_confirm=on_confirm).open()
+
 
 class ClassListItem(OneLineAvatarIconListItem):
     pass
@@ -197,12 +204,15 @@ class Course3Screen(Screen):
 class Course4Screen(Screen):
     pass
 
+
 class BMICalculatorScreen(Screen):
     def calculate_bmi(self):
         height = float(self.ids.height.text)
         weight = float(self.ids.weight.text)
         bmi = (weight / (height ** 2)) * 730
         self.ids.bmi_label.text = f"Your BMI is: {bmi:.2f}"
+
+
 class CreateAccountScreen(Screen):
     box_is_filled = False
 
