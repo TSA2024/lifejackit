@@ -9,7 +9,6 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from kivy.uix.textinput import TextInput
-
 from kivymd.uix.button import MDRaisedButton
 from kivymd.uix.card import MDCard
 from kivymd.uix.floatlayout import MDFloatLayout
@@ -18,10 +17,8 @@ from kivymd.uix.tab import MDTabsBase
 from kivymd.uix.textfield import MDTextField
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
-
 from data import faq, quotes, aspirations, appointment_people
 from database import query, update
-
 from datetime import date
 
 
@@ -46,7 +43,6 @@ class Tab(MDFloatLayout, MDTabsBase):
 
 class StartingScreen(Screen):
     pass
-
 
 class MainScreen(Screen):
     aspiration_popup_i = 0
@@ -155,7 +151,6 @@ class MainScreen(Screen):
         submit_button.bind(on_release=submit_button_pressed)
         layout.add_widget(submit_button)
 
-
         # Add content to the Popup
         self.popup.content = layout
 
@@ -202,7 +197,12 @@ class Course3Screen(Screen):
 class Course4Screen(Screen):
     pass
 
-
+class BMICalculatorScreen(Screen):
+    def calculate_bmi(self):
+        height = float(self.ids.height.text)
+        weight = float(self.ids.weight.text)
+        bmi = (weight / (height ** 2)) * 730
+        self.ids.bmi_label.text = f"Your BMI is: {bmi:.2f}"
 class CreateAccountScreen(Screen):
     box_is_filled = False
 
@@ -403,3 +403,5 @@ class TimePopup(Popup):
             return
         self.on_save(self, self.selected.text)
         self.dismiss()
+
+

@@ -1,4 +1,6 @@
 from os import getcwd, path
+
+from kivy.core.window import Window
 from kivy.factory import Factory
 
 from screens import *
@@ -41,6 +43,7 @@ class LifeJackIt(MDApp):
             self.sm.add_widget(Course2Screen(name='c2'))
             self.sm.add_widget(Course3Screen(name='c3'))
             self.sm.add_widget(Course4Screen(name='c4'))
+            self.sm.add_widget(BMICalculatorScreen(name='BMI'))
             sm = self.sm
         return Factory.MainScreen()
 
